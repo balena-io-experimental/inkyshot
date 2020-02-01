@@ -11,7 +11,9 @@ draw = ImageDraw.Draw(img)
 
 from font_fredoka_one import FredokaOne
 
-font = ImageFont.truetype(FredokaOne, 16)
+from font_hanken_grotesk import HankenGrotesk
+
+font = ImageFont.truetype(HankenGrotesk, 16)
 
 message = os.environ['INKY_MESSAGE']
 w, h = font.getsize(message)

@@ -14,7 +14,19 @@ from font_fredoka_one import FredokaOne
 
 from font_hanken_grotesk import HankenGrotesk
 
-font = ImageFont.truetype(HankenGrotesk, int(os.environ['FONT_SIZE']))
+from font_intuitive import Intuitive
+
+from font_source_serif_pro import SourceSerifPro
+
+from font_source_sans_pro import SourceSansPro
+
+from font_caladea import Caladea
+
+from font_roboto import Roboto
+
+from font_amatic_sc import AmaticSC
+
+font = ImageFont.truetype(locals()[os.environ["FONT"]], int(os.environ['FONT_SIZE']))
 
 bounding_box = [0, 0, inky_display.WIDTH, inky_display.HEIGHT]
 x1, y1, x2, y2 = bounding_box 

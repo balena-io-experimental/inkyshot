@@ -1,8 +1,25 @@
-FROM balenalib/raspberry-pi-debian-python:3.7-buster-build
-RUN pip install inky
-RUN install_packages python3-pil
+FROM balenalib/raspberry-pi-debian-python:3.7-buster-run
 
-RUN pip install font_fredoka_one font_hanken_grotesk font_intuitive font_source_serif_pro font_source_sans_pro font_caladea font_roboto font_amatic_sc
+WORKDIR /usr/app
+COPY pip.conf /etc/
+
+RUN install_packages \
+  libatlas3-base \
+  libgfortran3 \
+  libzstd1 \
+  liblcms2-2 \
+  libjbig0 \
+  libopenjp2-7 \
+  libwebpdemux2 \
+  libtiff5 \
+  libwebpmux3 \
+  libwebp6 \
+  libxcb1 \
+  libfreetype6-dev
+
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+
 COPY displaytext.py .
 
 CMD while : ; do python displaytext.py; sleep ${INTERVAL=600}; done

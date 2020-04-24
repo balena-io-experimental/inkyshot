@@ -2,8 +2,8 @@ import os
 import textwrap
 from inky import InkyPHAT
 
-inky_display = InkyPHAT("black")
-inky_display.set_border(inky_display.WHITE)
+inky_display = InkyPHAT("yellow")
+inky_display.set_border(inky_display.YELLOW)
 
 from PIL import Image, ImageFont, ImageDraw
 

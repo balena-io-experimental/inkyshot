@@ -1,0 +1,11 @@
+numpy==1.18.2
+inky==0.0.5
+Pillow==7.1.1
+font_fredoka_one
+font_hanken_grotesk
+font_intuitive
+font_source_serif_pro
+font_source_sans_pro
+font_caladea
+font_roboto
+font_amatic_sc

@@ -1,9 +1,12 @@
 import os
 import textwrap
+import urllib.request
+import json
+
 from inky import InkyPHAT
 
-inky_display = InkyPHAT("yellow")
-inky_display.set_border(inky_display.YELLOW)
+inky_display = InkyPHAT("black")
+inky_display.set_border(inky_display.WHITE)
 
 from PIL import Image, ImageFont, ImageDraw
 
@@ -31,8 +34,11 @@ font = ImageFont.truetype(locals()[os.environ["FONT"]], int(os.environ['FONT_SIZ
 bounding_box = [0, 0, inky_display.WIDTH, inky_display.HEIGHT]
 x1, y1, x2, y2 = bounding_box 
 
-message = os.environ['INKY_MESSAGE']
-# message = "Don't try too hard, just do what makes you happy!"
+req = urllib.request.Request("https://quotes.rest/qod?language=en", headers={"Accept" : "application/json"})
+res = urllib.request.urlopen(req).read()
+data = json.loads(res.decode())
+
+message = data['contents']['quotes'][0]['quote']
 
 test_message = ""
 message_width = 0

@@ -22,4 +22,4 @@ RUN pip install -r requirements.txt
 
 COPY displaytext.py .
 
-CMD while : ; do python displaytext.py; sleep ${INTERVAL=600}; done
+CMD while : ; do python displaytext.py; sleep ${INTERVAL=3600}; done

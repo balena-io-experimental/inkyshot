@@ -34,17 +34,24 @@ font = ImageFont.truetype(locals()[os.environ["FONT"]], int(os.environ['FONT_SIZ
 bounding_box = [0, 0, inky_display.WIDTH, inky_display.HEIGHT]
 x1, y1, x2, y2 = bounding_box 
 
-req = urllib.request.Request("https://quotes.rest/qod?language=en", headers={"Accept" : "application/json"})
-res = urllib.request.urlopen(req).read()
-data = json.loads(res.decode())
+if "INKY_MESSAGE" in os.environ:
+   message = os.environ['INKY_MESSAGE'] 
 
-message = data['contents']['quotes'][0]['quote']
+else:
+    req = urllib.request.Request("https://quotes.rest/qod?language=en", headers={"Accept" : "application/json"})
+    res = urllib.request.urlopen(req).read()
+    data = json.loads(res.decode())
+    message = data['contents']['quotes'][0]['quote']
 
 test_message = ""
 message_width = 0
+test_character = "a"
+
+if "TEST_CHARACTER" in os.environ:
+    test_character = os.environ['TEST_CHARACTER']
 
 while message_width < inky_display.WIDTH:
-    test_message += os.environ['TEST_CHARACTER']
+    test_message += test_character
     message_width, message_height = draw.textsize(test_message, font=font)
 
 max_width = len(test_message)
@@ -71,6 +78,9 @@ for ii in word_list:
     x = (x2 - x1 - w)/2 + x1
     draw.text((x, (y + current_h)), ii, inky_display.BLACK, font, align="center")
     current_h += line_height + pad
+
+if "ROTATE" in os.environ:
+    img = img.rotate(180)
 
 inky_display.set_image(img)
 inky_display.show()

@@ -34,8 +34,10 @@ else:
 # Work out what size font is required to fit this message on the display
 message_does_not_fit = True
 font_size = 37
-test_character = "a"
+if "FONT_SIZE" in os.environ:
+    font_size = int(os.environ["FONT_SIZE"])
 
+test_character = "a"
 if "TEST_CHARACTER" in os.environ:
     test_character = os.environ['TEST_CHARACTER']
 

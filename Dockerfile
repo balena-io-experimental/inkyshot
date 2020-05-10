@@ -20,6 +20,6 @@ RUN install_packages \
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
-COPY displaytext.py .
+COPY start.py .
 
-CMD while : ; do python displaytext.py; sleep ${INTERVAL=3600}; done
+CMD while : ; do python start.py; sleep ${INTERVAL=3600}; done

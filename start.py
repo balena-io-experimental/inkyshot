@@ -2,6 +2,7 @@ import os
 import textwrap
 import urllib.request
 import json
+import math
 
 from inky import InkyPHAT
 from PIL import Image, ImageFont, ImageDraw
@@ -21,23 +22,6 @@ inky_display.set_border(inky_display.WHITE)
 img = Image.new("P", (inky_display.WIDTH, inky_display.HEIGHT))
 draw = ImageDraw.Draw(img)
 
-font = ImageFont.truetype(locals()[os.environ["FONT"]], int(os.environ['FONT_SIZE']))
-
-# We're using the test character here to work out how many characters
-# can fit on the display when using the chosen font
-test_message = ""
-message_width = 0
-test_character = "a"
-
-if "TEST_CHARACTER" in os.environ:
-    test_character = os.environ['TEST_CHARACTER']
-
-while message_width < inky_display.WIDTH:
-    test_message += test_character
-    message_width, message_height = draw.textsize(test_message, font=font)
-
-max_width = len(test_message)
-
 # Use a dashboard defined message if we have one, otherwise load a nice quote
 if "INKY_MESSAGE" in os.environ:
    message = os.environ['INKY_MESSAGE'] 
@@ -47,9 +31,41 @@ else:
     data = json.loads(res.decode())
     message = data['contents']['quotes'][0]['quote']
 
-# We wrap the message to the width we worked out earlier
-wrapper = textwrap.TextWrapper(width=max_width) 
-word_list = wrapper.wrap(text=message)
+# Work out what size font is required to fit this message on the display
+message_does_not_fit = True
+font_size = 37
+test_character = "a"
+
+if "TEST_CHARACTER" in os.environ:
+    test_character = os.environ['TEST_CHARACTER']
+
+while message_does_not_fit == True:
+    test_message = ""
+    message_width = 0
+    font_size -= 1
+
+    # Start with the chosen font and size
+    font = ImageFont.truetype(locals()[os.environ["FONT"]], font_size)
+
+    # We're using the test character here to work out how many characters
+    # can fit on the display when using the chosen font
+    while message_width < inky_display.WIDTH:
+        test_message += test_character
+        message_width, message_height = draw.textsize(test_message, font=font)
+
+    max_width = len(test_message)
+    max_lines = math.floor(inky_display.HEIGHT/message_height)
+
+    # We wrap the message to the width we worked out earlier
+    wrapper = textwrap.TextWrapper(width=max_width) 
+    word_list = wrapper.wrap(text=message)
+    
+    if len(word_list) <= max_lines:
+        message_does_not_fit = False
+
+    if font_size < 8:
+        message_does_not_fit = False
+
 offset_x, offset_y = font.getoffset(message)
 
 # Rejoin the wrapped lines with newline chars

@@ -49,34 +49,18 @@ else:
 
 # We wrap the message to the width we worked out earlier
 wrapper = textwrap.TextWrapper(width=max_width) 
-word_list = wrapper.wrap(text=message) 
+word_list = wrapper.wrap(text=message)
+offset_x, offset_y = font.getoffset(message)
 
-num_lines = len(word_list)
-message_height = 0
+# Rejoin the wrapped lines with newline chars
+separator = '\n'
+output_text = separator.join(word_list)
 
-# Iterate over the line list first to get the total height of all the lines together
-for ii in word_list:
-    w, h = draw.textsize(ii, font=font)
-    message_height += h
+w, h = draw.multiline_textsize(output_text, font=font, spacing=0)
 
-
-# Take the total line height and subtract from the entire display
-# this allows us to center vertically
-line_height = message_height/num_lines
-y = (inky_display.HEIGHT - message_height)/2
-
-
-# Draw the wrapped lines
-current_h = 0
-
-for ii in word_list:
-    w, h = draw.textsize(ii, font=font)
-
-    # Figure out the offset needed to center horizontally
-    x = (inky_display.WIDTH - w)/2
-    draw.text((x, (y + current_h)), ii, inky_display.BLACK, font, align="center")
-    current_h += line_height
-
+x = (inky_display.WIDTH - w)/2
+y = (inky_display.HEIGHT - h - offset_y)/2
+draw.multiline_text((x, y), output_text, inky_display.BLACK, font, align="center", spacing=0)
 
 # Rotate and display the image
 if "ROTATE" in os.environ:

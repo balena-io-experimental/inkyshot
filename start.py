@@ -15,10 +15,16 @@ from font_caladea import Caladea
 from font_roboto import Roboto
 from font_amatic_sc import AmaticSC
 
+# Assume a default font if none set
+font_selected = AmaticSC
+if "FONT" in os.environ:
+    font_selected = locals()[os.environ["FONT"]]
+
 # Init the display. TODO: support other colours
 inky_display = InkyPHAT("black")
 inky_display.set_border(inky_display.WHITE)
 
+# Init the PIL image we're gonna build
 img = Image.new("P", (inky_display.WIDTH, inky_display.HEIGHT))
 draw = ImageDraw.Draw(img)
 
@@ -47,7 +53,7 @@ while message_does_not_fit == True:
     font_size -= 1
 
     # Start with the chosen font and size
-    font = ImageFont.truetype(locals()[os.environ["FONT"]], font_size)
+    font = ImageFont.truetype(font_selected, font_size)
 
     # We're using the test character here to work out how many characters
     # can fit on the display when using the chosen font

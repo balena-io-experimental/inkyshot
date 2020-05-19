@@ -47,6 +47,10 @@ Inkyshot will automatically choose the largest font size for your message that s
 
 When figuring out what size font to use, Inkyshot (invisibly) fills the screen with the `a` character to see how many will fit. You can override this by setting the `TEST_CHARACTER` environment variable with any wider (`w`) or slimmer (`i`) characters of your choosing to adjust this behavior.
 
+### Rotation
+
+If Inkyshot is living in a different house where things aren't necessarily always the same way up, use the `ROTATE` environment variable to rotate the output by 180 degrees.
+
 ## Case
 
 STL files are included within the assets folder of the project for you to 3D print your own case.

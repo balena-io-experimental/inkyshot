@@ -4,6 +4,7 @@ WORKDIR /usr/app
 COPY pip.conf /etc/
 
 RUN install_packages \
+  cron \
   libatlas3-base \
   libgfortran3 \
   libzstd1 \
@@ -20,6 +21,11 @@ RUN install_packages \
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
-COPY start.py .
+COPY start.sh .
+COPY run-update.sh .
+COPY update-display.py .
 
-CMD while : ; do python start.py; sleep ${INTERVAL=3600}; done
+RUN chmod +x start.sh
+RUN chmod +x run-update.sh
+
+CMD ["/bin/bash","start.sh"]

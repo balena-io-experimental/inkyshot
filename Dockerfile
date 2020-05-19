@@ -23,9 +23,9 @@ RUN pip install -r requirements.txt
 
 COPY start.sh .
 COPY run-update.sh .
-COPY update-display.py .
 
 RUN chmod +x start.sh
 RUN chmod +x run-update.sh
 
+COPY update-display.py .
 CMD ["/bin/bash","start.sh"]

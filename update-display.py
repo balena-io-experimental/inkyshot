@@ -1,6 +1,7 @@
 import os
 import textwrap
 import urllib.request
+import urllib.error
 import json
 import math
 
@@ -28,20 +29,25 @@ inky_display.set_border(inky_display.WHITE)
 img = Image.new("P", (inky_display.WIDTH, inky_display.HEIGHT))
 draw = ImageDraw.Draw(img)
 
+font_size = 37
+if "FONT_SIZE" in os.environ:
+    font_size = int(os.environ["FONT_SIZE"])
+
 # Use a dashboard defined message if we have one, otherwise load a nice quote
 if "INKY_MESSAGE" in os.environ:
    message = os.environ['INKY_MESSAGE'] 
 else:
     req = urllib.request.Request("https://quotes.rest/qod?language=en", headers={"Accept" : "application/json"})
-    res = urllib.request.urlopen(req).read()
-    data = json.loads(res.decode())
-    message = data['contents']['quotes'][0]['quote']
+    try:
+        res = urllib.request.urlopen(req).read()
+        data = json.loads(res.decode())
+        message = data['contents']['quotes'][0]['quote']
+    except urllib.error.HTTPError as err:
+        font_size = 25
+        message = "Sorry folks, today's quote has gone walkies :("
 
 # Work out what size font is required to fit this message on the display
 message_does_not_fit = True
-font_size = 37
-if "FONT_SIZE" in os.environ:
-    font_size = int(os.environ["FONT_SIZE"])
 
 test_character = "a"
 if "TEST_CHARACTER" in os.environ:

@@ -29,7 +29,7 @@ Inkyshot wants to deliver a shot of inspiration to start your day, and by defaul
 
 ### Timezone
 
-In order for the update time to work correctly, you'll of course have to tell Inkyshot what timezone you'd like to use. Set the `TZ` environment variable to any [IANA timezone](), e.g. `Europe/London`, `America/Los_Angeles`, `Asia/Taipei` etc.
+In order for the update time to work correctly, you'll of course have to tell Inkyshot what timezone you'd like to use. Set the `TZ` environment variable to any [IANA timezone](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones), e.g. `Europe/London`, `America/Los_Angeles`, `Asia/Taipei` etc.
 
 ### Message override
 

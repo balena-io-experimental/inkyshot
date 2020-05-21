@@ -39,10 +39,10 @@ if "INKY_MESSAGE" in os.environ:
 else:
     req = urllib.request.Request("https://quotes.rest/qod?language=en", headers={"Accept" : "application/json"})
     try:
-        res = urllib.request.urlopen(req).read()
+        res = urllib.request.urlopen(req, timeout=5).read()
         data = json.loads(res.decode())
         message = data['contents']['quotes'][0]['quote']
-    except urllib.error.HTTPError as err:
+    except (urllib.error.HTTPError, urllib.error.URLError) as err:
         font_size = 25
         message = "Sorry folks, today's quote has gone walkies :("
 

@@ -5,6 +5,9 @@
 **Get a daily random inspirational quote delivered direct to your desk with Inkyshot. Build multiple Inkyshots and share the inspiration with your friends, family and loved ones ❤️**
 
 ## Hardware required
+
+![](https://raw.githubusercontent.com/balenalabs-incubator/inkyshot/master/assets/hardware-photo.jpg)
+
 * Raspberry Pi (tested with Zero and 3B so far)
 * [Pimoroni InkyPHAT display](https://shop.pimoroni.com/products/inky-phat?variant=12549254938707)
 * 8GB SD Card (Sandisk Extreme Pro recommended)

@@ -59,7 +59,11 @@ while message_does_not_fit == True:
     font_size -= 1
 
     # Start with the chosen font and size
-    font = ImageFont.truetype(font_selected, font_size)
+    if font_size > 17:
+        font = ImageFont.truetype(font_selected, font_size)
+    else:
+        font_size = 8
+        font = ImageFont.truetype("fonts/Grand9KPixel.ttf", font_size)
 
     # We're using the test character here to work out how many characters
     # can fit on the display when using the chosen font
@@ -77,7 +81,7 @@ while message_does_not_fit == True:
     if len(word_list) <= max_lines:
         message_does_not_fit = False
 
-    if font_size < 8:
+    if font_size < 9:
         message_does_not_fit = False
 
 offset_x, offset_y = font.getoffset(message)

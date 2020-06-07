@@ -63,7 +63,7 @@ while message_does_not_fit == True:
         font = ImageFont.truetype(font_selected, font_size)
     else:
         font_size = 8
-        font = ImageFont.truetype("fonts/Grand9KPixel.ttf", font_size)
+        font = ImageFont.truetype("/usr/app/fonts/Grand9KPixel.ttf", font_size)
 
     # We're using the test character here to work out how many characters
     # can fit on the display when using the chosen font

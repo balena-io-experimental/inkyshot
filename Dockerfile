@@ -23,6 +23,7 @@ RUN pip install -r requirements.txt
 
 COPY start.sh .
 COPY run-update.sh .
+COPY lib lib
 COPY fonts fonts
 
 RUN chmod +x start.sh

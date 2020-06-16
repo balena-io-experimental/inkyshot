@@ -13,6 +13,7 @@
 * 8GB SD Card (Sandisk Extreme Pro recommended)
 * Power supply
 * **Optional:** 3D printed case with [micro USB sockets](https://www.aliexpress.com/item/4000484202812.html)
+* **Optional:** [Waveshare 2.13" e-paper display V2](https://www.waveshare.com/wiki/2.13inch_e-Paper_HAT) (**Note:** the case designs will need modification to fit this display. Set the `WAVESHARE` environment variable to `1` to enable support)
 
 ## Setup & Installation
 

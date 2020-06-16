@@ -16,7 +16,10 @@ from font_caladea import Caladea
 from font_roboto import Roboto
 from font_amatic_sc import AmaticSC
 
-logging.basicConfig(level=logging.DEBUG)
+if "DEBUG" in os.environ:
+    logging.basicConfig(level=logging.DEBUG)
+else:
+    logging.basicConfig(level=logging.INFO)
 
 # Assume a default font if none set
 font_selected = AmaticSC
@@ -24,10 +27,12 @@ if "FONT" in os.environ:
     font_selected = locals()[os.environ["FONT"]]
 
 # Init the display. TODO: support other colours
-logging.info("init and Clear")
+logging.debug("Init and Clear")
 if "WAVESHARE" in os.environ:
-    from waveshare_epd import epd2in13_V2  
-    display = epd2in13_V2.EPD()
+    logging.info("Display type: Waveshare")
+
+    import lib.epd2in13_V2  
+    display = lib.epd2in13_V2.EPD()
     display.init(display.FULL_UPDATE)
     display.Clear(0xFF)
     # These are the opposite of what InkyPhat uses.
@@ -36,15 +41,17 @@ if "WAVESHARE" in os.environ:
     img = Image.new('1', (WIDTH, HEIGHT), 255)
     BLACK = "black"
 else:
+    logging.info("Display type: InkyPHAT")
+
     from inky import InkyPHAT
     display = InkyPHAT("black")
-    display.set_border(inky_display.WHITE)
+    display.set_border(display.WHITE)
     WIDTH = display.WIDTH
     HEIGHT = display.HEIGHT
-    img = Image.new("P", (inky_display.WIDTH, inky_display.HEIGHT))
+    img = Image.new("P", (display.WIDTH, display.HEIGHT))
     BLACK = display.BLACK
 
-logging.debug("w: %s x h %s", WIDTH, HEIGHT)
+logging.info("Display dimensions: W %s x H %s", WIDTH, HEIGHT)
 
 draw = ImageDraw.Draw(img)
 
@@ -68,7 +75,7 @@ else:
 # Work out what size font is required to fit this message on the display
 message_does_not_fit = True
 
-test_character = "w"
+test_character = "a"
 if "TEST_CHARACTER" in os.environ:
     test_character = os.environ['TEST_CHARACTER']
 
@@ -119,7 +126,9 @@ draw.multiline_text((x, y), output_text, BLACK, font, align="center", spacing=0)
 if "ROTATE" in os.environ:
     img = img.rotate(180)
 
-# epd does not have a set_image method.
-display.display(display.getbuffer(img))
-#display.set_image(img)
-#display.show()
+if "WAVESHARE" in os.environ:
+    # epd does not have a set_image method.
+    display.display(display.getbuffer(img))
+else:
+    display.set_image(img)
+    display.show()

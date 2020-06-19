@@ -72,6 +72,8 @@ else:
         font_size = 25
         message = "Sorry folks, today's quote has gone walkies :("
 
+logging.info("Message: %s", message)
+
 # Work out what size font is required to fit this message on the display
 message_does_not_fit = True
 
@@ -110,6 +112,7 @@ while message_does_not_fit == True:
     if font_size < 9:
         message_does_not_fit = False
 
+logging.info("Font size: %s", font_size)
 offset_x, offset_y = font.getoffset(message)
 
 # Rejoin the wrapped lines with newline chars

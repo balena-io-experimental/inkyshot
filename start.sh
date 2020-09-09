@@ -1,4 +1,10 @@
 #!/bin/bash
+# Get the current device name
+export DEVICE_NAME=$(curl -sX GET "https://api.balena-cloud.com/v5/device?\$filter=uuid%20eq%20'$BALENA_DEVICE_UUID'" \
+-H "Content-Type: application/json" \
+-H "Authorization: Bearer $BALENA_API_KEY" | \
+jq -r ".d | .[0] | .device_name")
+
 # Run the display update once on container start
 python /usr/app/update-display.py
 

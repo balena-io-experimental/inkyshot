@@ -16,7 +16,8 @@ RUN install_packages \
   libwebpmux3 \
   libwebp6 \
   libxcb1 \
-  libfreetype6-dev
+  libfreetype6-dev \
+  jq
 
 COPY requirements.txt .
 RUN pip install -r requirements.txt

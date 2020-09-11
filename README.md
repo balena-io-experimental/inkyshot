@@ -59,6 +59,22 @@ When figuring out what size font to use, Inkyshot (invisibly) fills the screen w
 
 If Inkyshot is living in a different house where things aren't necessarily always the same way up, use the `ROTATE` environment variable to rotate the output by 180 degrees.
 
+### Weather
+To enable the weather display, set the environment variable `NEXT_DISPLAY` to `weather`.
+
+Next, use either `LATLONG` (e.g. 39.9199,32.8543) or `WEATHER_LOCATION` (e.g. Ankara, Turkey) environment variables to define the location for weather information. Entering only an empty `WEATHER_LOCATION` is also sufficient and in this case Inkyshot will lookup the latitude and longitude information from device's IP address.
+
+Set `SCALE` environment variable to `F` to display the temperature values in Fahrenheit scale. The default is Celcius scale.
+
+Use the `WEATHER_FONT` variable to customize the font used in weather display mode.
+
+`LOCALE` variable allows to display the date of temperature reading in any language supported by [the date library](https://arrow.readthedocs.io/en/latest/#module-arrow.locales).
+
+Set `ALTERNATE_FREQUENCY` to alternate the display mode between quote and weather. Inkyshot uses this environment variable's number value as minutes to update periodically. By default, the first display is quote mode and you can instead chose weather by setting `NEXT_DISPLAY` to `weather`.
+
+Finally, you can choose to fix Inkyshot to display only weather. Set `NEXT_DISPLAY` to `weather`, `DISPLAY_QUOTE` to false and don't set `INKY_MESSAGE`. In this setup, inkyshot will keep updating weather information after every minutes set by `ALTERNATE_FREQUENCY`.
+
+
 ## Case
 
 STL files are included within the assets folder of the project for you to 3D print your own case.
@@ -89,11 +105,14 @@ Each commit message should consist of a *body* and a *footer*, structured in the
 
 ## Credits
 
-Quotes are delivered from the 
+Quotes are delivered from the
 <span style="z-index:50;font-size:0.9em; font-weight: bold;">
       <img src="https://theysaidso.com/branding/theysaidso.png" height="20" width="20" alt="theysaidso.com"/>
       <a href="https://theysaidso.com" title="Powered by quotes from theysaidso.com" style="color: #ccc; margin-left: 4px; vertical-align: middle;">
         They Said So®
       </a>
 </span> REST API.
- 
+
+Location information based on IP address is retrieved from [ipinfo.io](https://ipinfo.io).
+
+We use Norwegian Meteorological Institute's [weather API](https://api.met.no/weatherapi/locationforecast/2.0/documentation) to get the weather forecast of the day. Weather symbols are customized from [yr.no's repository](https://github.com/nrkno/yr-weather-symbols).

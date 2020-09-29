@@ -41,7 +41,7 @@ Is there a special occasion in your family? Override the daily quote with a shot
 
 ### Font
 
-There are a few fonts built in that you can try. The default is `AmaticSC`, but you can use the `FONT` variable and set it to any of: `FredokaOne`, `HankenGrotesk`, `Intuitive`, `SourceSerifPro`, `SourceSansPro`, `Caladea` and `Roboto`. You're welcome to PR more options into the project!
+There are a few fonts built in that you can try. The default is `AmaticSC`, but you can use the `FONT` variable and set it to any of: `FredokaOne`, `HankenGrotesk`, `Intuitive`, `SourceSerifPro`, `SourceSansPro`, `Caladea`, `Roboto` and `Grand9KPixel`. You're welcome to PR more options into the project!
 
 ### Font size
 
@@ -67,6 +67,21 @@ A position is open in the rear of the case for the use of a [micro USB PCB socke
 
 ![](https://raw.githubusercontent.com/balenalabs-incubator/inkyshot/master/assets/inky-rear.png)
 
+### Commit structure
+
+_When submitting a pull request, please use the guidance outlined below._
+
+Each commit message should consist of a *body* and a *footer*, structured in the following format:
+
+```
+<scope (optional)>: <subject (mandatory)>
+--BLANK LINK--
+(optional) <body>
+--BLANK LINE--
+(optional) Connects-to: #issue-number
+(mandatory) Change-type: major | minor | patch
+(optional) Signed-off-by: Foo Bar <foobar@balena.io>
+```
 
 ## Credits
 

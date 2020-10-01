@@ -16,6 +16,9 @@ from font_caladea import Caladea
 from font_roboto import Roboto
 from font_amatic_sc import AmaticSC
 
+# Declare non pip fonts here ** Note: ttf files need to be in the /fonts dir of application repo
+Grand9KPixel = "/usr/app/fonts/Grand9KPixel.ttf"
+
 if "DEBUG" in os.environ:
     logging.basicConfig(level=logging.DEBUG)
 else:

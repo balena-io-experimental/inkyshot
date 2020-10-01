@@ -12,7 +12,7 @@ python /usr/app/update-display.py
 export -p > /usr/app/env.sh
 
 # Add the job to the crontab using update_hour var, defaulting to 9 AM
-(echo "0 ${UPDATE_HOUR:-9} * * * /usr/app/run-update.sh") | crontab -
+(echo "0 ${UPDATE_HOUR:-9} * * * /usr/app/run-update.sh > /proc/1/fd/1 2>&1") | crontab -
 
 # Start the cron daemon as PID 1
 exec cron -f

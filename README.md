@@ -39,6 +39,10 @@ In order for the update time to work correctly, you'll of course have to tell In
 
 Is there a special occasion in your family? Override the daily quote with a shot of celebration by setting the `INKY_MESSAGE` environment variable. Try `Happy birthday Sister!`, `Congratulations on the new job, mate!`, or `Happy mother's day!`.
 
+### Quote of the day category
+
+The quote api has several quote categories available. Use the `QOD_CATEGORY` environment variable to change the type of quote retreived. Available categories: `inspire` (default), `management`, `sports`, `life`, `funny`, `love`, `art`, `students`.
+
 ### Font
 
 There are a few fonts built in that you can try. The default is `AmaticSC`, but you can use the `FONT` variable and set it to any of: `FredokaOne`, `HankenGrotesk`, `Intuitive`, `SourceSerifPro`, `SourceSansPro`, `Caladea` and `Roboto`. You're welcome to PR more options into the project!
@@ -77,3 +81,4 @@ Quotes are delivered from the
         They Said So®
       </a>
 </span> REST API.
+ 

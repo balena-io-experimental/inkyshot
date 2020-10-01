@@ -58,6 +58,16 @@ draw = ImageDraw.Draw(img)
 font_size = 37
 if "FONT_SIZE" in os.environ:
     font_size = int(os.environ["FONT_SIZE"])
+    
+# Check for a quote of the day category, otherwise use inspire
+category = "inspire"
+if "QOD_CATEGORY" in os.environ:
+    category = os.environ['QOD_CATEGORY']
+
+# Check for a quote of the day language. ** Note: Only English is supported currently. **
+language = "en"
+if "QOD_LANGUAGE" in os.environ:
+    language = os.environ['QOD_LANGUAGE']
 
 # Use a dashboard defined message if we have one, otherwise load a nice quote
 if "INKY_MESSAGE" in os.environ:
@@ -67,7 +77,7 @@ if "INKY_MESSAGE" in os.environ:
        # If the message var was set but blank, use the device name
        message = os.environ['DEVICE_NAME']
 else:
-    req = urllib.request.Request("https://quotes.rest/qod?language=en", headers={"Accept" : "application/json"})
+    req = urllib.request.Request(f"https://quotes.rest/qod?category={category}&language={language}", headers={"Accept" : "application/json"})
     try:
         res = urllib.request.urlopen(req, timeout=5).read()
         data = json.loads(res.decode())

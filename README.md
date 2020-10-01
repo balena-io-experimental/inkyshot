@@ -19,7 +19,7 @@
 
 Running this project is as simple as deploying it to a balenaCloud application. You can do it in just one click by using the button below:
 
-[![](https://balena.io/deploy.png)](https://dashboard.balena-cloud.com/deploy)
+[![](https://balena.io/deploy.png)](https://dashboard.balena-cloud.com/deploy?repoUrl=https://github.com/balenalabs/inkyshot)
 
 You can also deploy in the traditional manner using the balena CLI and `balena push` command. For more information [check out the docs](https://www.balena.io/docs/learn/deploy/deployment/).
 
@@ -65,13 +65,13 @@ STL files are included within the assets folder of the project for you to 3D pri
 
 ![](https://raw.githubusercontent.com/balenalabs-incubator/inkyshot/master/assets/inky-print.png)
 
-The case has two positions for a captive M3 nut, and can be fastened together with two countersunk 8mm M3 machine screws.
+The case has two positions for a captive M3 nut, and can be fastened together with two countersunk 8mm M3 machine screws. If you're using design 2, the screws you'll need are something [like this](https://www.accu.co.uk/en/self-tapping-raised-torx-screws/21738-SHRKT-No-2-1-2-A2).
 
 A position is open in the rear of the case for the use of a [micro USB PCB socket](https://www.aliexpress.com/item/4000484202812.html), allowing for direct connection of power to the back of a Raspberry Pi Zero.
 
 ![](https://raw.githubusercontent.com/balenalabs-incubator/inkyshot/master/assets/inky-rear.png)
 
-### Commit structure
+### Contributing & Commit structure
 
 _When submitting a pull request, please use the guidance outlined below._
 

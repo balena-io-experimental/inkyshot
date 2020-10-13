@@ -1,6 +1,9 @@
+arrow==0.15.7
+geocoder==1.38.1
 numpy==1.18.2
 inky==0.0.5
 Pillow==7.1.1
+requests==2.24.0
 font_fredoka_one
 font_hanken_grotesk
 font_intuitive

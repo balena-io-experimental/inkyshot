@@ -102,9 +102,16 @@ def draw_weather(weather, img, scale):
     )
     # Draw today's max humidity on left side below temperatures
     draw.text((3, 87), f"{weather['max_humidity']}%", BLACK, font=small_font)
-    # Load weather icon for day or night
+    # Load weather icon
     icon_name = weather['symbol'].split('_')[0]
-    time_of_day = 'd' if weather['symbol'].split('_')[1] == 'day' else 'n'
+    time_of_day = ''
+    # Couple of symbols have different icons for day and night. Check if this symbol is one of them.
+    if len(weather['symbol'].split('_')) > 1:
+        symbol_cycle = weather['symbol'].split('_')[1]
+        if symbol_cycle == 'day':
+            time_of_day = 'd'
+        elif symbol_cycle == 'night':
+            time_of_day = 'n'
     icon_filename = f"{icon_map[icon_name]:02}{time_of_day}.png"
     filepath = Path(__file__).parent / 'weather-icons' / icon_filename
     icon_image = Image.open(filepath)

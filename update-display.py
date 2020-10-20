@@ -239,10 +239,9 @@ if "WAVESHARE" in os.environ:
     WHITE = "white"
     img = Image.new('1', (WIDTH, HEIGHT), 255)
 else:
-    logging.info("Display type: InkyPHAT")
-
-    from inky import InkyPHAT
-    display = InkyPHAT("black")
+    import inky
+    display = inky.auto()
+    logging.info("Display type: " + type(display).__name__)
     display.set_border(display.WHITE)
     WIDTH = display.WIDTH
     HEIGHT = display.HEIGHT

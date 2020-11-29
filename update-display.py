@@ -361,8 +361,17 @@ else:
 
 logging.info("Done drawing")
 # Alternate to other display
-os.environ["NEXT_DISPLAY"] = 'weather' \
-    if (NEXT_DISPLAY == 'quote' and "ALTERNATE_FREQUENCY" in os.environ) or not DISPLAY_QUOTE \
-    else 'quote'
+
+#    default --> quote only.
+#    ALTERNATE_FREQUENCY set --> switch between quote/weather
+#    DISPLAY_QUOTE = 0 --> showing only weather
+
+if "DISPLAY_QUOTE" in os.environ and os.environ["DISPLAY_QUOTE"]=='0':
+        os.environ["NEXT_DISPLAY"] = 'weather'
+else:
+        if(NEXT_DISPLAY == 'quote' and "ALTERNATE_FREQUENCY" in os.environ): 
+            os.environ["NEXT_DISPLAY"] = 'weather'
+        else :
+            os.environ["NEXT_DISPLAY"] = 'quote'
 
 sys.exit(0)

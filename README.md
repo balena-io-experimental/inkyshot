@@ -8,12 +8,12 @@
 
 ![](https://raw.githubusercontent.com/balenalabs-incubator/inkyshot/master/assets/hardware-photo.jpg)
 
-* Raspberry Pi (tested with Zero and 3B so far)
-* [Pimoroni InkyPHAT display](https://shop.pimoroni.com/products/inky-phat?variant=12549254938707)
-* 8GB SD Card (Sandisk Extreme Pro recommended)
-* Power supply
-* **Optional:** 3D printed case with [micro USB sockets](https://www.aliexpress.com/item/4000484202812.html)
-* **Optional:** [Waveshare 2.13" e-paper display V2](https://www.waveshare.com/wiki/2.13inch_e-Paper_HAT) (**Note:** the case designs will need modification to fit this display. Set the `WAVESHARE` environment variable to `1` to enable support)
+- Raspberry Pi (tested with Zero and 3B so far)
+- [Pimoroni InkyPHAT display](https://shop.pimoroni.com/products/inky-phat?variant=12549254938707)
+- 8GB SD Card (Sandisk Extreme Pro recommended)
+- Power supply
+- **Optional:** 3D printed case with [micro USB sockets](https://www.aliexpress.com/item/4000484202812.html)
+- **Optional:** [Waveshare 2.13" e-paper display V2](https://www.waveshare.com/wiki/2.13inch_e-Paper_HAT) (**Note:** the case designs will need modification to fit this display. Set the `WAVESHARE` environment variable to `1` to enable support)
 
 ## Setup & Installation
 
@@ -60,6 +60,7 @@ When figuring out what size font to use, Inkyshot (invisibly) fills the screen w
 If Inkyshot is living in a different house where things aren't necessarily always the same way up, use the `ROTATE` environment variable to rotate the output by 180 degrees.
 
 ### Weather
+
 To enable the weather display, set the environment variable `NEXT_DISPLAY` to `weather`.
 
 Next, use either `LATLONG` (e.g. 39.9199,32.8543) or `WEATHER_LOCATION` (e.g. Ankara, Turkey) environment variables to define the location for weather information. Entering only an empty `WEATHER_LOCATION` is also sufficient and in this case Inkyshot will lookup the latitude and longitude information from device's IP address.
@@ -74,6 +75,9 @@ Set `ALTERNATE_FREQUENCY` to alternate the display mode between quote and weathe
 
 Finally, you can choose to fix Inkyshot to display only weather. Set `NEXT_DISPLAY` to `weather`, `DISPLAY_QUOTE` to false and don't set `INKY_MESSAGE`. In this setup, inkyshot will keep updating weather information after every minutes set by `ALTERNATE_FREQUENCY`.
 
+### Wifi Connect
+
+As from v1.2.0 this project includes [wifi-connect](https://github.com/balena-io/wifi-connect) which is a utility for dynamically setting the WiFi configuration on a Linux device via a captive portal. If your device is not connected to the internet, an access point will be created. You can refer to the docs [here](https://github.com/balenablocks/wifi-connect#customisation) for customizing the different settings for wifi-connect.
 
 ## Case
 
@@ -91,7 +95,7 @@ A position is open in the rear of the case for the use of a [micro USB PCB socke
 
 _When submitting a pull request, please use the guidance outlined below._
 
-Each commit message should consist of a *body* and a *footer*, structured in the following format:
+Each commit message should consist of a _body_ and a _footer_, structured in the following format:
 
 ```
 <scope (optional)>: <subject (mandatory)>
@@ -107,10 +111,10 @@ Each commit message should consist of a *body* and a *footer*, structured in the
 
 Quotes are delivered from the
 <span style="z-index:50;font-size:0.9em; font-weight: bold;">
-      <img src="https://theysaidso.com/branding/theysaidso.png" height="20" width="20" alt="theysaidso.com"/>
-      <a href="https://theysaidso.com" title="Powered by quotes from theysaidso.com" style="color: #ccc; margin-left: 4px; vertical-align: middle;">
-        They Said So®
-      </a>
+<img src="https://theysaidso.com/branding/theysaidso.png" height="20" width="20" alt="theysaidso.com"/>
+<a href="https://theysaidso.com" title="Powered by quotes from theysaidso.com" style="color: #ccc; margin-left: 4px; vertical-align: middle;">
+They Said So®
+</a>
 </span> REST API.
 
 Location information based on IP address is retrieved from [ipinfo.io](https://ipinfo.io).

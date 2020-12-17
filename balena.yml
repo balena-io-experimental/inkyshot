@@ -1,6 +1,6 @@
 version: "2"
 slug: "inkyshot"
-name: "inkyshot"
+name: "Inkyshot"
 type: "sw.application"
 assets:
   - url: "https://github.com/balenalabs/inkyshot"

@@ -61,7 +61,7 @@ If Inkyshot is living in a different house where things aren't necessarily alway
 
 ### Weather
 
-To enable the weather display, set the environment variable `NEXT_DISPLAY` to `weather`.
+To enable the weather display, set the environment variable `MODE` to `weather`.
 
 Next, use either `LATLONG` (e.g. 39.9199,32.8543) or `WEATHER_LOCATION` (e.g. Ankara, Turkey) environment variables to define the location for weather information. Entering only an empty `WEATHER_LOCATION` is also sufficient and in this case Inkyshot will lookup the latitude and longitude information from device's IP address.
 
@@ -71,9 +71,10 @@ Use the `WEATHER_FONT` variable to customize the font used in weather display mo
 
 `LOCALE` variable allows to display the date of temperature reading in any language supported by [the date library](https://arrow.readthedocs.io/en/latest/#module-arrow.locales).
 
-Set `ALTERNATE_FREQUENCY` to alternate the display mode between quote and weather. Inkyshot uses this environment variable's number value as minutes to update periodically. By default, the first display is quote mode and you can instead chose weather by setting `NEXT_DISPLAY` to `weather`.
+Finally, you can set the environment variable `MODE` to `alternate` for Inkyshot to rotate between `quote` and `weather` modes.
+You can put number of minutes in the `ALTERNATE_FREQUENCY` environment variable in order to configure Inkyshot to update periodically.
+By default, the first display is quote mode and you can instead chose weather by setting `current_display` tag to `weather` on the device.
 
-Finally, you can choose to fix Inkyshot to display only weather. Set `NEXT_DISPLAY` to `weather`, `DISPLAY_QUOTE` to false and don't set `INKY_MESSAGE`. In this setup, inkyshot will keep updating weather information after every minutes set by `ALTERNATE_FREQUENCY`.
 
 ### Wifi Connect
 

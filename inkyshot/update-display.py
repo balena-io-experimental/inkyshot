@@ -7,8 +7,6 @@ from os import environ
 import sys
 import textwrap
 import time
-import urllib.request
-import urllib.error
 
 from font_amatic_sc import AmaticSC
 from font_caladea import Caladea
@@ -21,6 +19,7 @@ from font_source_serif_pro import SourceSerifPro
 from PIL import Image, ImageFont, ImageDraw
 import arrow
 import geocoder
+import requests
 
 icon_map = {
     "clearsky": 1,
@@ -120,30 +119,45 @@ def draw_weather(weather, img, scale):
     img.paste(icon_image, (120, 3), icon_mask)
     return img
 
+def get_current_display():
+    """Query device supervisor API to retrieve the current display"""
+    url = f"{BALENA_SUPERVISOR_ADDRESS}/v2/device/tags?apikey={BALENA_SUPERVISOR_API_KEY}"
+    headers = {"Accept": "application/json"}
+    current_display = None
+    try:
+        response = requests.get(url, headers=headers)
+        if response.status_code == 200:
+            data = response.json()
+            if "tags" in data:
+                current_display = next((t['value'] for t in data['tags'] if t['name'] == "current_display"), None)
+    except requests.exceptions.RequestException as err:
+        logging.error(err)
+    return current_display
+
 def get_location():
     """Return coordinate and location info based on IP address"""
     url = "https://ipinfo.io"
-    req = urllib.request.Request(url, headers={"Accept" : "application/json"})
+    headers = {"Accept": "application/json"}
     try:
-        res = urllib.request.urlopen(req, timeout=5)
-        logging.info("Retrieved the location data using device's IP address")
-        if(res.status == 200):
-            return json.loads(res.read().decode())
-    except (urllib.error.HTTPError, urllib.error.URLError) as err:
+        response = requests.get(url, headers=headers)
+        if response.status_code == 200:
+            return response.json()
+    except requests.exceptions.RequestException as err:
         logging.error(err)
     logging.error("Failed to retrieve the location data")
     return {}
 
-def get_weather(lat, long):
+def get_weather(lat: float, lon: float):
     """Return weather report for the next 24 hours"""
-    url = f"https://api.met.no/weatherapi/locationforecast/2.0/compact?lat={lat}&lon={long}"
-    req = urllib.request.Request(url, headers={"Accept" : "application/json"})
+    # Truncate all geographical coordinates to max 4 decimals to respect API's policy
+    url = f"https://api.met.no/weatherapi/locationforecast/2.0/compact?lat={lat:.4f}&lon={lon:.4f}"
+    headers = { "Accept": "application/json" }
     logging.info("Retrieving weather forecast")
     weather = {}
     try:
-        res = urllib.request.urlopen(req, timeout=5)
-        if(res.status == 200):
-            data = json.loads(res.read().decode())
+        response = requests.get(url, headers=headers)
+        if response.status_code == 200:
+            data = response.json()
             timeseries = data['properties']['timeseries']
             now = arrow.utcnow()
             tomorrow = now.shift(hours=+24)
@@ -166,9 +180,39 @@ def get_weather(lat, long):
             weather['max_temp'] = max(temperatures)
             weather['min_temp'] = min(temperatures)
             weather['max_humidity'] = max([x['humidity'] for x in weather_24hours if x['time'] <= now.shift(days=+1)])
-    except (urllib.error.HTTPError, urllib.error.URLError) as err:
+    except requests.exceptions.RequestException as err:
         logging.error(err)
     return weather
+
+def set_current_display(val):
+    """Update the tag value for current display"""
+    # First get device identifier for future call
+    url_device = f"https://api.balena-cloud.com/v5/device?$filter=uuid eq '{BALENA_DEVICE_UUID}'&$select=id"
+    url_device_tag = "https://api.balena-cloud.com/v5/device_tag"
+    headers = {"Accept": "application/json", "Authorization": f"Bearer {BALENA_API_KEY}"}
+    try:
+        response = requests.get(url_device, headers=headers)
+        if response.status_code == 200:
+            data = response.json()
+            device_id = data['d'][0]['id'] if 'd' in data and len(data['d']) > 0 else None
+            request_data = {
+                "device": device_id,
+                "tag_key": "current_display",
+                "value": val
+            }
+            request_data = {"device": device_id, "tag_key": "current_display", "value": val }
+            current_display = get_current_display()
+            if current_display:
+                if current_display == val:
+                    # No need to modify the tag
+                    return None
+                # Let's modify the existing tag with the new val
+                requests.patch(url_device_tag, data=request_data, headers=headers)
+            else:
+                # No tag exists yet, so let's create it
+                requests.post(url_device_tag, data=request_data, headers=headers)
+    except requests.exceptions.RequestException as err:
+        logging.error(f"Failed to set current display to {val}. Error is: {err}")
 
 def temp_to_str(temp, scale):
     """Prepare the temperature to draw based on the defined scale: Celcius or Fahrenheit"""
@@ -181,11 +225,6 @@ if "DEBUG" in os.environ:
     logging.basicConfig(level=logging.DEBUG)
 else:
     logging.basicConfig(level=logging.INFO)
-
-# Check if daily quote is disabled
-DISPLAY_QUOTE = True
-if "DISPLAY_QUOTE" in os.environ and not os.environ["DISPLAY_QUOTE"]:
-    DISPLAY_QUOTE = False
 
 # Assume a default font if none set
 FONT_SELECTED = AmaticSC
@@ -220,8 +259,14 @@ SCALE = 'F' if "SCALE" in os.environ and os.environ["SCALE"] == 'F' else 'C'
 # Locale formatting of date
 LOCALE = os.environ["LOCALE"] if "LOCALE" in os.environ else 'en'
 
-# Alternate displaying quote and weather
-NEXT_DISPLAY = os.environ["NEXT_DISPLAY"] if "NEXT_DISPLAY" in os.environ else 'quote'
+# Display mode of Inkyshot
+MODE = os.environ["MODE"] if "MODE" in os.environ else 'quote'
+
+# Read balena variables for balena API calls
+BALENA_API_KEY = os.environ["BALENA_API_KEY"]
+BALENA_DEVICE_UUID = os.environ["BALENA_DEVICE_UUID"]
+BALENA_SUPERVISOR_ADDRESS = os.environ["BALENA_SUPERVISOR_ADDRESS"]
+BALENA_SUPERVISOR_API_KEY = os.environ["BALENA_SUPERVISOR_API_KEY"]
 
 # Init the display. TODO: support other colours
 logging.debug("Init and Clear")
@@ -253,9 +298,12 @@ draw = ImageDraw.Draw(img)
 
 logging.info("Display dimensions: W %s x H %s", WIDTH, HEIGHT)
 
-display_weather = False
+current_display = get_current_display()
+target_display = 'quote'
+if MODE == 'weather'  or (MODE == 'alternate' and current_display == 'quote'):
+    target_display = 'weather'
 
-if NEXT_DISPLAY == 'weather':
+if target_display == 'weather':
     weather_location = None
     if "WEATHER_LOCATION" in os.environ:
         weather_location = os.environ["WEATHER_LOCATION"]
@@ -275,28 +323,30 @@ if NEXT_DISPLAY == 'weather':
     weather = get_weather(LAT, LONG)
     # Set latitude and longituted as environment variables for consecutive calls
     os.environ['LATLONG'] = f"{LAT},{LONG}"
-    # If weather is empty dictionary fall back to drawing quote
+    # If weather is empty dictionary, fall back to drawing quote
     if len(weather) > 0:
         img = draw_weather(weather, img, SCALE)
-        display_weather = True
+    else:
+        target_display = 'quote'
 
-message = None
+message = os.environ['INKY_MESSAGE'] if 'INKY_MESSAGE' in os.environ else None
 # Use a dashboard defined message if we have one, otherwise load a nice quote
-if "INKY_MESSAGE" in os.environ and not display_weather and DISPLAY_QUOTE:
-   message = os.environ['INKY_MESSAGE']
-
-   if message == "":
-       # If the message var was set but blank, use the device name
-       message = os.environ['DEVICE_NAME']
-elif not display_weather and DISPLAY_QUOTE:
-    req = urllib.request.Request(f"https://quotes.rest/qod?category={CATEGORY}&language={LANGUAGE}", headers={"Accept" : "application/json"})
-    try:
-        res = urllib.request.urlopen(req, timeout=5).read()
-        data = json.loads(res.decode())
-        message = data['contents']['quotes'][0]['quote']
-    except (urllib.error.HTTPError, urllib.error.URLError) as err:
-        FONT_SIZE = 25
-        message = "Sorry folks, today's quote has gone walkies :("
+if target_display == 'quote':
+    # If message was set but blank, use the device name
+    if message == "":
+        message = os.environ['DEVICE_NAME']
+    else:
+        try:
+            response = requests.get(
+                f"https://quotes.rest/qod?category={CATEGORY}&language={LANGUAGE}",
+                headers={"Accept" : "application/json"}
+            )
+            data = response.json()
+            message = data['contents']['quotes'][0]['quote']
+        except requests.exceptions.RequestException as err:
+            logging.error(err)
+            FONT_SIZE = 25
+            message = "Sorry folks, today's quote has gone walkies :("
 
 if message:
     logging.info("Message: %s", message)
@@ -360,9 +410,9 @@ else:
     display.show()
 
 logging.info("Done drawing")
-# Alternate to other display
-os.environ["NEXT_DISPLAY"] = 'weather' \
-    if (NEXT_DISPLAY == 'quote' and "ALTERNATE_FREQUENCY" in os.environ) or not DISPLAY_QUOTE \
-    else 'quote'
+
+# Update device with the current display for ALTERNATE mode
+if MODE == 'alternate':
+    set_current_display(target_display)
 
 sys.exit(0)

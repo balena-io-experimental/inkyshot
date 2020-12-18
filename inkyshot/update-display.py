@@ -151,7 +151,10 @@ def get_weather(lat: float, lon: float):
     """Return weather report for the next 24 hours"""
     # Truncate all geographical coordinates to max 4 decimals to respect API's policy
     url = f"https://api.met.no/weatherapi/locationforecast/2.0/compact?lat={lat:.4f}&lon={lon:.4f}"
-    headers = { "Accept": "application/json" }
+    headers = {
+        "Accept": "application/json",
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36"
+    }
     logging.info("Retrieving weather forecast")
     weather = {}
     try:

@@ -301,6 +301,7 @@ draw = ImageDraw.Draw(img)
 
 logging.info("Display dimensions: W %s x H %s", WIDTH, HEIGHT)
 
+# Reason the display mode based on environment variables and the current display (logic is explained in the readme)
 current_display = get_current_display()
 target_display = 'quote'
 if MODE == 'weather'  or (MODE == 'alternate' and current_display == 'quote'):
@@ -331,14 +332,13 @@ if target_display == 'weather':
         img = draw_weather(weather, img, SCALE)
     else:
         target_display = 'quote'
-
-message = os.environ['INKY_MESSAGE'] if 'INKY_MESSAGE' in os.environ else None
-# Use a dashboard defined message if we have one, otherwise load a nice quote
-if target_display == 'quote':
+elif target_display == 'quote':
+    # Use a dashboard defined message if we have one, otherwise load a nice quote
+    message = os.environ['INKY_MESSAGE'] if 'INKY_MESSAGE' in os.environ else None
     # If message was set but blank, use the device name
     if message == "":
         message = os.environ['DEVICE_NAME']
-    else:
+    elif message is None:
         try:
             response = requests.get(
                 f"https://quotes.rest/qod?category={CATEGORY}&language={LANGUAGE}",
@@ -351,7 +351,6 @@ if target_display == 'quote':
             FONT_SIZE = 25
             message = "Sorry folks, today's quote has gone walkies :("
 
-if message:
     logging.info("Message: %s", message)
     # Work out what size font is required to fit this message on the display
     message_does_not_fit = True

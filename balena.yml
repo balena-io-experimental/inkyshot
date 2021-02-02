@@ -1,14 +1,16 @@
-version: "2"
-slug: "inkyshot"
 name: "Inkyshot"
+description: "Get a daily random inspirational quote delivered direct to your desk with Inkyshot. Build multiple Inkyshots and share the inspiration with your friends, family and loved ones ❤️"
 type: "sw.application"
 assets:
-  - url: "https://github.com/balenalabs/inkyshot"
-    name: "repository"
-  - url: "https://raw.githubusercontent.com/balenalabs/inkyshot/master/logo.png"
-    name: "logo"
+  repository:
+    type: "blob.asset"
+    data:
+      url: "https://github.com/balenalabs/inkyshot"
+  logo:
+    type: "blob.asset"
+    data:
+      url: "https://raw.githubusercontent.com/balenalabs/inkyshot/master/logo.png"    
 data:
-  description: "Get a daily random inspirational quote delivered direct to your desk with Inkyshot. Build multiple Inkyshots and share the inspiration with your friends, family and loved ones ❤️"
   applicationEnvironmentVariables:
     - UPDATE_HOUR: 9
     - TZ: 'Europe/London'

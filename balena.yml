@@ -1,29 +1,34 @@
-name: "Inkyshot"
-description: "Get a daily random inspirational quote delivered direct to your desk with Inkyshot. Build multiple Inkyshots and share the inspiration with your friends, family and loved ones ❤️"
+name: Inkyshot
+description: >-
+  Get a daily random inspirational quote delivered direct to your desk with
+  Inkyshot. Build multiple Inkyshots and share the inspiration with your
+  friends, family and loved ones ❤️
 fleetcta: Get inspired
 post-provisioning: >-
   # Usage instructions
 
-  Allow a few minutes for your device to download the application. Once it's completed a quote should appear on your device's screen.
-type: "sw.application"
+  Allow a few minutes for your device to download the application. Once it's
+  completed a quote should appear on your device's screen.
+type: sw.application
 assets:
   repository:
-    type: "blob.asset"
+    type: blob.asset
     data:
-      url: "https://github.com/balenalabs/inkyshot"
+      url: 'https://github.com/balenalabs/inkyshot'
   logo:
-    type: "blob.asset"
+    type: blob.asset
     data:
-      url: "https://raw.githubusercontent.com/balenalabs/inkyshot/master/logo.png"    
+      url: 'https://raw.githubusercontent.com/balenalabs/inkyshot/master/logo.png'
 data:
   applicationEnvironmentVariables:
     - UPDATE_HOUR: 9
-    - TZ: 'Europe/London'
-    - QOD_CATEGORY: 'inspire'
-    - FONT: 'AmaticSC'
-    - TEST_CHARACTER: 'a'
-  defaultDeviceType: "raspberry-pi"
+    - TZ: Europe/London
+    - QOD_CATEGORY: inspire
+    - FONT: AmaticSC
+    - TEST_CHARACTER: a
+  defaultDeviceType: raspberry-pi
   supportedDeviceTypes:
-    - "raspberry-pi"
-    - "raspberrypi3"
-    - "fincm3"
+    - raspberry-pi
+    - raspberrypi3
+    - fincm3
+version: 1.3.5

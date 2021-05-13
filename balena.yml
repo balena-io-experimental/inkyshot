@@ -1,5 +1,10 @@
 name: "Inkyshot"
 description: "Get a daily random inspirational quote delivered direct to your desk with Inkyshot. Build multiple Inkyshots and share the inspiration with your friends, family and loved ones ❤️"
+fleetcta: Get inspired
+post-provisioning: >-
+  ## Usage instructions
+
+  Allow a few minutes for your device to download the application. Once it's completed a quote should appear on your device's screen.
 type: "sw.application"
 assets:
   repository:

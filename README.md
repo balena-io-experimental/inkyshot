@@ -69,6 +69,8 @@ Set `SCALE` environment variable to `F` to display the temperature values in Fah
 
 Use the `WEATHER_FONT` variable to customize the font used in weather display mode.
 
+Use the `WEATHER_INVERT` variable to invert the Image being displayed - `WAVESHARE` specific.
+
 `LOCALE` variable allows to display the date of temperature reading in any language supported by [the date library](https://arrow.readthedocs.io/en/latest/#module-arrow.locales).
 
 Finally, you can set the environment variable `MODE` to `alternate` for Inkyshot to rotate between `quote` and `weather` modes.

@@ -35,6 +35,8 @@ Inkyshot wants to deliver a shot of inspiration to start your day, and by defaul
 
 In order for the update time to work correctly, you'll of course have to tell Inkyshot what timezone you'd like to use. Set the `TZ` environment variable to any [IANA timezone](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones), e.g. `Europe/London`, `America/Los_Angeles`, `Asia/Taipei` etc.
 
+This timezone is also used for displaying the correct date when the environment variable `MODE` is set to `weather`.
+
 ### Message override
 
 Is there a special occasion in your family? Override the daily quote with a shot of celebration by setting the `INKY_MESSAGE` environment variable. Try `Happy birthday Sister!`, `Congratulations on the new job, mate!`, or `Happy mother's day!`.
@@ -68,6 +70,8 @@ Next, use either `LATLONG` (e.g. 39.9199,32.8543) or `WEATHER_LOCATION` (e.g. An
 Set `SCALE` environment variable to `F` to display the temperature values in Fahrenheit scale. The default is Celcius scale.
 
 Use the `WEATHER_FONT` variable to customize the font used in weather display mode.
+
+Use the `WEATHER_INVERT` variable to invert the Image being displayed.
 
 `LOCALE` variable allows to display the date of temperature reading in any language supported by [the date library](https://arrow.readthedocs.io/en/latest/#module-arrow.locales).
 

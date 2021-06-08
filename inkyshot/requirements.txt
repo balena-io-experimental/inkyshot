@@ -16,7 +16,7 @@ geocoder==1.38.1
 idna==2.10
 inky==1.0.1
 numpy==1.19.2
-Pillow==8.0.0
+Pillow==8.2.0
 python-dateutil==2.8.1
 ratelim==0.1.6
 requests==2.24.0

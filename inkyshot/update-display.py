@@ -294,8 +294,8 @@ if WAVESHARE:
     # These are the opposite of what InkyPhat uses.
     WIDTH = display.height # yes, Height
     HEIGHT = display.width # yes, width
-    BLACK = "black"
-    WHITE = "white"
+    BLACK = 0
+    WHITE = 1
     img = Image.new('1', (WIDTH, HEIGHT), 255)
 else:
     import inky

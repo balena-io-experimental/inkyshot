@@ -16,7 +16,7 @@ from font_intuitive import Intuitive
 from font_roboto import Roboto
 from font_source_sans_pro import SourceSansPro
 from font_source_serif_pro import SourceSerifPro
-from PIL import Image, ImageFont, ImageDraw
+from PIL import Image, ImageFont, ImageDraw, ImageOps
 import arrow
 import geocoder
 import requests
@@ -116,7 +116,14 @@ def draw_weather(weather, img, scale):
     icon_image = Image.open(filepath)
     icon_mask = create_mask(icon_image)
     # Draw the weather icon
-    img.paste(icon_image, (120, 3), icon_mask)
+    if WEATHER_INVERT and WAVESHARE:
+        logging.info("Inverting Weather Icon")
+        icon = Image.new('1', (100, 100), 255)
+        icon.paste(icon_image, (0,0), icon_mask)
+        icon_inverted = ImageOps.invert(icon.convert('RGB'))
+        img.paste(icon_inverted, (120, 3))
+    else:
+        img.paste(icon_image, (120, 3), icon_mask)
     return img
 
 def get_current_display():
@@ -254,6 +261,8 @@ WEATHER_FONT = FredokaOne
 if "WEATHER_FONT" in os.environ:
     WEATHER_FONT = locals()[os.environ["WEATHER_FONT"]]
 
+WEATHER_INVERT = True if "WEATHER_INVERT" in os.environ else False
+
 [LAT, LONG] = [float(x) for x in os.environ["LATLONG"].split(",")] if "LATLONG" in os.environ else [None, None]
 
 # Temperature scale
@@ -271,9 +280,11 @@ BALENA_DEVICE_UUID = os.environ["BALENA_DEVICE_UUID"]
 BALENA_SUPERVISOR_ADDRESS = os.environ["BALENA_SUPERVISOR_ADDRESS"]
 BALENA_SUPERVISOR_API_KEY = os.environ["BALENA_SUPERVISOR_API_KEY"]
 
+WAVESHARE = True if "WAVESHARE" in os.environ else False
+
 # Init the display. TODO: support other colours
 logging.debug("Init and Clear")
-if "WAVESHARE" in os.environ:
+if WAVESHARE:
     logging.info("Display type: Waveshare")
 
     import lib.epd2in13_V2
@@ -283,8 +294,8 @@ if "WAVESHARE" in os.environ:
     # These are the opposite of what InkyPhat uses.
     WIDTH = display.height # yes, Height
     HEIGHT = display.width # yes, width
-    BLACK = "black"
-    WHITE = "white"
+    BLACK = 0
+    WHITE = 1
     img = Image.new('1', (WIDTH, HEIGHT), 255)
 else:
     import inky
@@ -404,7 +415,7 @@ elif target_display == 'quote':
 if "ROTATE" in os.environ:
     img = img.rotate(180)
 
-if "WAVESHARE" in os.environ:
+if WAVESHARE:
     # epd does not have a set_image method.
     display.display(display.getbuffer(img))
 else:

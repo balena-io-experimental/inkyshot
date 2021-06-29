@@ -34,3 +34,5 @@ RUN chmod +x run-update.sh
 COPY update-display.py .
 
 CMD ["/bin/bash","start.sh"]
+
+ENV DEVICE_HOSTNAME inkyshot

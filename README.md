@@ -79,8 +79,11 @@ Finally, you can set the environment variable `MODE` to `alternate` for Inkyshot
 You can put number of minutes in the `ALTERNATE_FREQUENCY` environment variable in order to configure Inkyshot to update periodically.
 By default, the first display is quote mode and you can instead chose weather by setting `current_display` tag to `weather` on the device.
 
+### Hostname
 
-### Wifi Connect
+By default the device will be assigned the hostname `inkyshot` so it can be easily found on a network. This can be changed with the `DEVICE_HOSTNAME` environment variable.
+
+## Wifi Connect
 
 As from v1.2.0 this project includes [wifi-connect](https://github.com/balena-io/wifi-connect) which is a utility for dynamically setting the WiFi configuration on a Linux device via a captive portal. If your device is not connected to the internet, an access point will be created. You can refer to the docs [here](https://github.com/balenablocks/wifi-connect#customisation) for customizing the different settings for wifi-connect.
 
@@ -96,7 +99,7 @@ A position is open in the rear of the case for the use of a [micro USB PCB socke
 
 ![](https://raw.githubusercontent.com/balenalabs-incubator/inkyshot/master/assets/inky-rear.png)
 
-### Contributing & Commit structure
+## Contributing & Commit structure
 
 _When submitting a pull request, please use the guidance outlined below._
 

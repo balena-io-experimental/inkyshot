@@ -245,6 +245,10 @@ FONT_SIZE = 24
 if "FONT_SIZE" in os.environ:
     FONT_SIZE = int(os.environ["FONT_SIZE"])
 
+COLOR = "BLACK"
+if "COLOR" in os.environ:
+    COLOR = str(os.environ["COLOR"])
+
 # Check for a quote of the day category, otherwise use inspire
 CATEGORY = "inspire"
 if "QOD_CATEGORY" in os.environ:
@@ -306,6 +310,7 @@ else:
     HEIGHT = display.HEIGHT
     BLACK = display.BLACK
     WHITE = display.WHITE
+    RED = display.RED
     img = Image.new("P", (WIDTH, HEIGHT))
 
 draw = ImageDraw.Draw(img)
@@ -409,7 +414,7 @@ elif target_display == 'quote':
 
     x = (WIDTH - w)/2
     y = (HEIGHT - h - offset_y)/2
-    draw.multiline_text((x, y), output_text, BLACK, FONT, align="center", spacing=0)
+    draw.multiline_text((x, y), output_text, COLOR, FONT, align="center", spacing=0)
 
 # Rotate and display the image
 if "ROTATE" in os.environ:

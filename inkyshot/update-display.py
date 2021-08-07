@@ -76,7 +76,7 @@ def create_mask(source):
             p = source.getpixel((x, y))
             if p in [BLACK, WHITE]:
                 mask_image.putpixel((x, y), 255)
-    return mask_image
+    return mask_image 
 
 # Declare non pip fonts here ** Note: ttf files need to be in the /fonts dir of application repo
 Grand9KPixel = "/usr/app/fonts/Grand9KPixel.ttf"

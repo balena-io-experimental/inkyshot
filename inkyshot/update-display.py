@@ -247,7 +247,7 @@ if "FONT_SIZE" in os.environ:
 
 COLOR = "BLACK"
 if "COLOR" in os.environ:
-    COLOR = str(os.environ["COLOR"])
+    COLOR = locals()[os.environ["COLOR"]]
 
 # Check for a quote of the day category, otherwise use inspire
 CATEGORY = "inspire"

@@ -1,0 +1,18 @@
+version: '2.1'
+services:
+  inkyshot:
+    build:
+      context: ./inkyshot
+    privileged: true
+    labels:
+      io.balena.features.balena-api: '1'
+      io.balena.features.supervisor-api: '1'
+  wifi-connect:
+    build:
+      context: ./wifi-connect
+    restart: always
+    network_mode: host
+    privileged: true
+    labels:
+      io.balena.features.dbus: '1'
+      io.balena.features.firmware: '1'

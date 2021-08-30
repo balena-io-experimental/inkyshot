@@ -1,0 +1,1 @@
+FROM balenablocks/wifi-connect:%%BALENA_ARCH%%

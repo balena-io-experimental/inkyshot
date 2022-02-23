@@ -81,7 +81,7 @@ By default, the first display is quote mode and you can instead chose weather by
 
 ### Hostname
 
-By default the device will be assigned the hostname `inkyshot` so it can be easily found on a network. This can be changed with the `DEVICE_HOSTNAME` environment variable.
+By default the device will be assigned the hostname `inkyshot` so it can be easily found on a network. This can be changed with the `SET_HOSTNAME` environment variable.
 
 ## Wifi Connect
 

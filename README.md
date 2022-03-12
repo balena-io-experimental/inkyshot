@@ -79,7 +79,7 @@ Finally, you can set the environment variable `MODE` to `alternate` for Inkyshot
 You can put number of minutes in the `ALTERNATE_FREQUENCY` environment variable in order to configure Inkyshot to update periodically.
 By default, the first display is quote mode and you can instead chose weather by setting `current_display` tag to `weather` on the device.
 
-#### Custom quotes CSV Suppot :
+#### Custom quotes CSV Support :
 Use `CSV_MESSAGE` to put custom quotes in this format: `This is Quote 1;This is Quote2;This is the last Quote`.
 
 Use `CSV_LOCAL_NAME` to refer to a path of a CSV file with custom quotes (don't forget the .csv extention).

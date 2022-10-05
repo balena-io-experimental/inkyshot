@@ -24,3 +24,5 @@ RPi.GPIO==0.7.0
 six==1.15.0
 smbus2==0.3.0
 spidev==3.5
+qrcode==7.3.1
+pillow==8.3.2

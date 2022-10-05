@@ -81,6 +81,19 @@ def create_mask(source):
 # Declare non pip fonts here ** Note: ttf files need to be in the /fonts dir of application repo
 Grand9KPixel = "/usr/app/fonts/Grand9KPixel.ttf"
 
+def drawQR(img, drawer, offsetx, offsety):
+    """Draws the img pixel by pixel by the drawer onto the display, starting at x,y
+    """
+    w, h = img.size
+    for x in range(w):
+        for y in range(h):
+            p = img.getpixel((x, y))
+            if p<255:
+                ox = offsetx + x
+                oy = offsety + y
+                drawer.point((ox, oy), BLACK)
+    return
+
 def draw_weather(weather, img, scale):
     """Draw the weather info on screen"""
     logging.info("Prepare the weather data for drawing")
@@ -281,6 +294,7 @@ BALENA_SUPERVISOR_ADDRESS = os.environ["BALENA_SUPERVISOR_ADDRESS"]
 BALENA_SUPERVISOR_API_KEY = os.environ["BALENA_SUPERVISOR_API_KEY"]
 
 WAVESHARE = True if "WAVESHARE" in os.environ else False
+QR_CODE = True if "QR_CODE" in os.environ else False
 
 # Init the display. TODO: support other colours
 logging.debug("Init and Clear")
@@ -346,6 +360,16 @@ if target_display == 'weather':
 elif target_display == 'quote':
     # Use a dashboard defined message if we have one, otherwise load a nice quote
     message = os.environ['INKY_MESSAGE'] if 'INKY_MESSAGE' in os.environ else None
+    # If message was set but blank, try using QRCODE
+    if message == "" or message is None:
+        message = os.environ['QR_CODE']
+        logging.info(f"QR => {message}")
+        import qrcode
+        qr_img = qrcode.make(message, box_size=4, border=1)
+        qr_img.save("latest_qr.png")
+        qr_image = Image.open("latest_qr.png")
+        drawQR(qr_image, draw, 111, 2)
+        logging.info("Pasted QR image")
     # If message was set but blank, use the device name
     if message == "":
         message = os.environ['DEVICE_NAME']
@@ -381,7 +405,12 @@ elif target_display == 'quote':
 
         # We're using the test character here to work out how many characters
         # can fit on the display when using the chosen font
-        while message_width < WIDTH:
+        if QR_CODE:
+            w_limit = WIDTH - 110
+        else:
+            w_limit = WIDTH
+
+        while message_width < w_limit:
             test_message += test_character
             message_width, message_height = draw.textsize(test_message, font=FONT)
 
@@ -407,9 +436,17 @@ elif target_display == 'quote':
 
     w, h = draw.multiline_textsize(output_text, font=FONT, spacing=0)
 
-    x = (WIDTH - w)/2
-    y = (HEIGHT - h - offset_y)/2
-    draw.multiline_text((x, y), output_text, BLACK, FONT, align="center", spacing=0)
+
+    if QR_CODE:
+        alignment="left"
+        x = 10
+        y = 10
+    else:
+        x = (WIDTH - w)/2
+        y = (HEIGHT - h - offset_y)/2
+        alignment="center"
+
+    draw.multiline_text((x, y), output_text, BLACK, FONT, align=alignment, spacing=0)
 
 # Rotate and display the image
 if "ROTATE" in os.environ:

@@ -114,9 +114,9 @@ def draw_weather(weather, img, scale, fill):
     icon_filename = f"{icon_map[icon_name]:02}{time_of_day}.png"
     filepath = Path(__file__).parent / 'weather-icons' / icon_filename
     icon_image = Image.open(filepath)
-    icon_mask = create_mask(icon_image)
     # Draw the weather icon
     if WEATHER_INVERT and WAVESHARE:
+        icon_mask = create_mask(icon_image)
         logging.info("Inverting Weather Icon")
         icon = Image.new('1', (100, 100), 255)
         icon.paste(icon_image, (0,0), icon_mask)

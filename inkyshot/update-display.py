@@ -123,7 +123,7 @@ def draw_weather(weather, img, scale):
         icon_inverted = ImageOps.invert(icon.convert('RGB'))
         img.paste(icon_inverted, (120, 3))
     else:
-        img.paste(icon_image, (120, 3), icon_mask)
+        img.paste(icon_image, (120, 3))
     return img
 
 def get_current_display():
@@ -306,6 +306,11 @@ else:
     HEIGHT = display.HEIGHT
     BLACK = display.BLACK
     WHITE = display.WHITE
+    if display.colour == "black":
+        COLOUR = BLACK
+    else:
+        # Both display.RED and display.YELLOW = 2
+        COLOUR = display.RED
     img = Image.new("P", (WIDTH, HEIGHT))
 
 draw = ImageDraw.Draw(img)

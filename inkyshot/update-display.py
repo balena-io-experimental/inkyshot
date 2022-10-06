@@ -227,8 +227,12 @@ def set_current_display(val):
 def temp_to_str(temp, scale):
     """Prepare the temperature to draw based on the defined scale: Celcius or Fahrenheit"""
     if scale == 'F':
-        temp = temp * 9/5 + 32
+        temp = celcius_to_fahrenheit(temp)
     return f"{temp:.1f}"
+
+def celcius_to_fahrenheit(temp):
+    """Convert Celsius to Fahrenheit"""
+    return temp * 9/5 + 32
 
 # Read the preset environment variables and overwrite the default ones
 if "DEBUG" in os.environ:

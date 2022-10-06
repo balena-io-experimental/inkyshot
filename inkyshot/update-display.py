@@ -81,7 +81,7 @@ def create_mask(source):
 # Declare non pip fonts here ** Note: ttf files need to be in the /fonts dir of application repo
 Grand9KPixel = "/usr/app/fonts/Grand9KPixel.ttf"
 
-def draw_weather(weather, img, scale):
+def draw_weather(weather, img, scale, fill):
     """Draw the weather info on screen"""
     logging.info("Prepare the weather data for drawing")
     # Draw today's date on left side below today's name
@@ -90,7 +90,7 @@ def draw_weather(weather, img, scale):
     draw.text((3, 3), today, BLACK, font=date_font)
     # Draw current temperature to right of today
     temp_font = ImageFont.truetype(WEATHER_FONT, 24)
-    draw.text((3, 30), f"{temp_to_str(weather['temperature'], scale)}°", BLACK, font=temp_font)
+    draw.text((3, 30), f"{temp_to_str(weather['temperature'], scale)}°", fill, font=temp_font)
     # Draw today's high and low temps on left side below date
     small_font = ImageFont.truetype(WEATHER_FONT, 14)
     draw.text(
@@ -354,7 +354,9 @@ if target_display == 'weather':
     os.environ['LATLONG'] = f"{LAT},{LONG}"
     # If weather is empty dictionary, fall back to drawing quote
     if len(weather) > 0:
-        img = draw_weather(weather, img, SCALE)
+        temperature = weather['temperature'] if SCALE == 'C' else celcius_to_fahrenheit(weather['temperature'])
+        fill = COLOUR if temperature >= TEMP_THRESHOLD else BLACK
+        img = draw_weather(weather, img, SCALE, fill)
     else:
         target_display = 'quote'
 elif target_display == 'quote':

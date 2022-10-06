@@ -24,5 +24,8 @@ fi
 # Add the job to the crontab using update_hour var, defaulting to 9 AM
 (echo "${Alternate} ${UpdateHour} * * * /usr/app/run-update.sh > /proc/1/fd/1 2>&1") | crontab -
 
-# Start the cron daemon as PID 1
-exec cron -f
+# Start cron 
+#cron
+
+# Start QR server
+python /usr/app/server.py

@@ -32,6 +32,7 @@ RUN chmod +x start.sh
 RUN chmod +x run-update.sh
 
 COPY update-display.py .
+COPY . .
 
 CMD ["/bin/bash","start.sh"]
 

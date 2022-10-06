@@ -7,6 +7,7 @@ from os import environ
 import sys
 import textwrap
 import time
+import argparse
 
 from font_amatic_sc import AmaticSC
 from font_caladea import Caladea
@@ -66,7 +67,8 @@ icon_map = {
     "snowshowersandthunder": 21,
 }
 
-QR_MODE = 'qr'
+QR_MODE = "qr"
+QR_DEFAULT_URL = "https://www.balena.io/"
 
 def create_mask(source):
     """Create a transparency mask to draw images in grayscale
@@ -129,15 +131,15 @@ def draw_weather(weather, img, scale):
         img.paste(icon_image, (120, 3), icon_mask)
     return img
 
-def generate_qr_image(message, display):
+def generate_qr_image(content, display):
     """
-    Generate QR image from input message
+    Generate QR image from input content
 
     """
 
     img = Image.new("1", (display.WIDTH, display.HEIGHT))
     size = min(display.HEIGHT, display.WIDTH)
-    qr_img = qrcode.make(message).resize((size, size))
+    qr_img = qrcode.make(content).resize((size, size))
     img.paste(qr_img, ((display.WIDTH - size)//2, (display.HEIGHT - size)//2))
     return img
 
@@ -244,6 +246,11 @@ def temp_to_str(temp, scale):
     if scale == 'F':
         temp = temp * 9/5 + 32
     return f"{temp:.1f}"
+
+parser=argparse.ArgumentParser()
+parser.add_argument("--qr", help="Set value for QR code")
+
+u_args=parser.parse_args()
 
 # Read the preset environment variables and overwrite the default ones
 if "DEBUG" in os.environ:
@@ -431,7 +438,8 @@ if target_display == 'quote':
     draw.multiline_text((x, y), output_text, BLACK, FONT, align="center", spacing=0)
 
 if target_display == QR_MODE:
-    img = generate_qr_image('https://www.balena.io/', display)
+    qr_content = u_args.qr if u_args.qr else QR_DEFAULT_URL
+    img = generate_qr_image(qr_content, display)
 
 # Rotate and display the image
 if "ROTATE" in os.environ:

@@ -27,6 +27,7 @@ COPY run-update.sh .
 COPY lib lib
 COPY fonts fonts
 COPY weather-icons weather-icons
+COPY logo.png .
 
 RUN chmod +x start.sh
 RUN chmod +x run-update.sh

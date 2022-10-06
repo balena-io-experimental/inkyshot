@@ -365,10 +365,22 @@ elif target_display == 'quote':
         message = os.environ['QR_CODE']
         logging.info(f"QR => {message}")
         import qrcode
-        qr_img = qrcode.make(message, box_size=4, border=1)
+        from qrcode.image.styledpil import StyledPilImage
+
+        qr = qrcode.QRCode(
+            version=8,
+            error_correction=qrcode.constants.ERROR_CORRECT_L,
+            box_size=4, 
+            border=1
+        )
+        qr.add_data(message)
+        qr_img = qr.make_image(
+            image_factory=StyledPilImage, 
+            embeded_image_path="logo.png"
+        )
         qr_img.save("latest_qr.png")
         qr_image = Image.open("latest_qr.png")
-        drawQR(qr_image.resize((102,102)), draw, 111, 1)
+        drawQR(qr_image.convert("L").convert("1").resize((102,102)), draw, 111, 1)
         logging.info("Pasted QR image")
     # If message was set but blank, use the device name
     if message == "":
@@ -439,8 +451,8 @@ elif target_display == 'quote':
 
     if QR_CODE:
         alignment="left"
-        x = 10
-        y = 10
+        x = 4
+        y = 4
     else:
         x = (WIDTH - w)/2
         y = (HEIGHT - h - offset_y)/2

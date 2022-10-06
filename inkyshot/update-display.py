@@ -20,6 +20,7 @@ from PIL import Image, ImageFont, ImageDraw, ImageOps
 import arrow
 import geocoder
 import requests
+import qrcode
 
 icon_map = {
     "clearsky": 1,
@@ -64,6 +65,8 @@ icon_map = {
     "snowshowers": 8,
     "snowshowersandthunder": 21,
 }
+
+QR_MODE = 'qr'
 
 def create_mask(source):
     """Create a transparency mask to draw images in grayscale
@@ -124,6 +127,18 @@ def draw_weather(weather, img, scale):
         img.paste(icon_inverted, (120, 3))
     else:
         img.paste(icon_image, (120, 3), icon_mask)
+    return img
+
+def generate_qr_image(message, display):
+    """
+    Generate QR image from input message
+
+    """
+
+    img = Image.new("1", (display.WIDTH, display.HEIGHT))
+    size = min(display.HEIGHT, display.WIDTH)
+    qr_img = qrcode.make(message).resize((size, size))
+    img.paste(qr_img, ((display.WIDTH - size)//2, (display.HEIGHT - size)//2))
     return img
 
 def get_current_display():
@@ -272,7 +287,7 @@ SCALE = 'F' if "SCALE" in os.environ and os.environ["SCALE"] == 'F' else 'C'
 LOCALE = os.environ["LOCALE"] if "LOCALE" in os.environ else 'en'
 
 # Display mode of Inkyshot
-MODE = os.environ["MODE"] if "MODE" in os.environ else 'quote'
+MODE = os.environ["MODE"] if "MODE" in os.environ else QR_MODE
 
 # Read balena variables for balena API calls
 BALENA_API_KEY = os.environ["BALENA_API_KEY"]
@@ -314,9 +329,12 @@ logging.info("Display dimensions: W %s x H %s", WIDTH, HEIGHT)
 
 # Reason the display mode based on environment variables and the current display (logic is explained in the readme)
 current_display = get_current_display()
-target_display = 'quote'
+target_display = QR_MODE
 if MODE == 'weather'  or (MODE == 'alternate' and current_display == 'quote'):
     target_display = 'weather'
+
+if MODE == 'quote':
+    target_display = 'quote'
 
 if target_display == 'weather':
     weather_location = None
@@ -343,7 +361,8 @@ if target_display == 'weather':
         img = draw_weather(weather, img, SCALE)
     else:
         target_display = 'quote'
-elif target_display == 'quote':
+
+if target_display == 'quote':
     # Use a dashboard defined message if we have one, otherwise load a nice quote
     message = os.environ['INKY_MESSAGE'] if 'INKY_MESSAGE' in os.environ else None
     # If message was set but blank, use the device name
@@ -410,6 +429,9 @@ elif target_display == 'quote':
     x = (WIDTH - w)/2
     y = (HEIGHT - h - offset_y)/2
     draw.multiline_text((x, y), output_text, BLACK, FONT, align="center", spacing=0)
+
+if target_display == QR_MODE:
+    img = generate_qr_image('https://www.balena.io/', display)
 
 # Rotate and display the image
 if "ROTATE" in os.environ:

@@ -368,7 +368,7 @@ elif target_display == 'quote':
         qr_img = qrcode.make(message, box_size=4, border=1)
         qr_img.save("latest_qr.png")
         qr_image = Image.open("latest_qr.png")
-        drawQR(qr_image, draw, 111, 2)
+        drawQR(qr_image.resize((102,102)), draw, 111, 1)
         logging.info("Pasted QR image")
     # If message was set but blank, use the device name
     if message == "":

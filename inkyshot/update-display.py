@@ -272,6 +272,11 @@ WEATHER_INVERT = True if "WEATHER_INVERT" in os.environ else False
 # Temperature scale
 SCALE = 'F' if "SCALE" in os.environ and os.environ["SCALE"] == 'F' else 'C'
 
+# Temperature threshold above which T is displayed in colour
+TEMP_THRESHOLD = 25 if SCALE == 'C' else celcius_to_fahrenheit(25)
+if "TEMP_THRESHOLD" in os.environ:
+    TEMP_THRESHOLD = os.environ['TEMP_THRESHOLD']
+
 # Locale formatting of date
 LOCALE = os.environ["LOCALE"] if "LOCALE" in os.environ else 'en'
 

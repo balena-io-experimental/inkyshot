@@ -86,21 +86,21 @@ def draw_weather(weather, img, scale, fill):
     logging.info("Prepare the weather data for drawing")
     # Draw today's date on left side below today's name
     today = arrow.utcnow().format(fmt="DD MMMM", locale=LOCALE)
-    date_font = ImageFont.truetype(WEATHER_FONT, 18)
-    draw.text((3, 3), today, BLACK, font=date_font)
+    date_font = ImageFont.truetype(WEATHER_FONT, 18 + WEATHER_FONT_INCREASE)
+    draw.text((3 + X_OFFSET/3, 3 + Y_OFFSET), today, BLACK, font=date_font)
     # Draw current temperature to right of today
-    temp_font = ImageFont.truetype(WEATHER_FONT, 24)
-    draw.text((3, 30), f"{temp_to_str(weather['temperature'], scale)}°", fill, font=temp_font)
+    temp_font = ImageFont.truetype(WEATHER_FONT, 24 + WEATHER_FONT_INCREASE)
+    draw.text((3 + X_OFFSET/3, 30 + Y_OFFSET), f"{temp_to_str(weather['temperature'], scale)}°", fill, font=temp_font)
     # Draw today's high and low temps on left side below date
-    small_font = ImageFont.truetype(WEATHER_FONT, 14)
+    small_font = ImageFont.truetype(WEATHER_FONT, 14 + WEATHER_FONT_INCREASE)
     draw.text(
-        (3, 72),
+        (3 + X_OFFSET/3, 72 + Y_OFFSET),
         f"{temp_to_str(weather['min_temp'], scale)}° - {temp_to_str(weather['max_temp'], scale)}°",
         BLACK,
         font=small_font,
     )
     # Draw today's max humidity on left side below temperatures
-    draw.text((3, 87), f"{weather['max_humidity']}%", BLACK, font=small_font)
+    draw.text((3 + X_OFFSET/3, 87 + Y_OFFSET), f"{weather['max_humidity']}%", BLACK, font=small_font)
     # Load weather icon
     icon_name = weather['symbol'].split('_')[0]
     time_of_day = ''
@@ -121,9 +121,9 @@ def draw_weather(weather, img, scale, fill):
         icon = Image.new('1', (100, 100), 255)
         icon.paste(icon_image, (0,0), icon_mask)
         icon_inverted = ImageOps.invert(icon.convert('RGB'))
-        img.paste(icon_inverted, (120, 3))
+        img.paste(icon_inverted, (120 + X_OFFSET, 3 + Y_OFFSET))
     else:
-        img.paste(icon_image, (120, 3))
+        img.paste(icon_image, (120 + X_OFFSET, 3 + Y_OFFSET))
     return img
 
 def get_current_display():
@@ -317,9 +317,22 @@ else:
     WHITE = display.WHITE
     if display.colour == "black":
         COLOUR = BLACK
+        # Display size: W 212 x H 104
+        X_OFFSET = 0
+        Y_OFFSET = 0
+        WEATHER_FONT_INCREASE = 0
     else:
         # Both display.RED and display.YELLOW = 2
         COLOUR = display.RED
+        # Display size: W 250 x H 122
+        # text margin is 3 + 1/3*X_OFFSET = 10 pixels from left border
+        # weather icon is 250 - (120 + 21 + 100) = 9 pixels from right border 
+        X_OFFSET = 21 
+        # centering weather icons along y-axis:
+        # default padding is 3 => 3+8 + 100 (weather icon height) + 3+8 = 122 pixels
+        # thus, an addition offset of 8 pixels places the weather icon in the middle
+        Y_OFFSET = 8 
+        WEATHER_FONT_INCREASE = 2
     img = Image.new("P", (WIDTH, HEIGHT))
 
 draw = ImageDraw.Draw(img)

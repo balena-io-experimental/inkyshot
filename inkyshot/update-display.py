@@ -361,8 +361,8 @@ elif target_display == 'quote':
     # Use a dashboard defined message if we have one, otherwise load a nice quote
     message = os.environ['INKY_MESSAGE'] if 'INKY_MESSAGE' in os.environ else None
     # If message was set but blank, try using QRCODE
-    if message == "" or message is None:
-        message = os.environ['QR_CODE']
+    if message is None and QR_CODE:
+        message = os.environ['QR_CODE']        
         logging.info(f"QR => {message}")
         import qrcode
         from qrcode.image.styledpil import StyledPilImage
@@ -384,7 +384,7 @@ elif target_display == 'quote':
         logging.info("Pasted QR image")
     # If message was set but blank, use the device name
     if message == "":
-        message = os.environ['DEVICE_NAME']
+        message = os.environ['DEVICE_NAME'] if 'DEVICE_NAME' in os.environ else None
     elif message is None:
         try:
             response = requests.get(

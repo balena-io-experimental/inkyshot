@@ -67,7 +67,11 @@ To enable the weather display, set the environment variable `MODE` to `weather`.
 
 Next, use either `LATLONG` (e.g. 39.9199,32.8543) or `WEATHER_LOCATION` (e.g. Ankara, Turkey) environment variables to define the location for weather information. Entering only an empty `WEATHER_LOCATION` is also sufficient and in this case Inkyshot will lookup the latitude and longitude information from device's IP address.
 
-Set `SCALE` environment variable to `F` to display the temperature values in Fahrenheit scale. The default is Celcius scale.
+Set `SCALE` environment variable to `F` to display the temperature values in Fahrenheit scale. The default is Celsius scale.
+
+Set `TEMP_THRESHOLD` environment variable to a desired temperature. All readings above this value will be displayed in colour on colour eInk screens. The default value is 25 Celsius (77 Fahrenheit).
+
+You can use the `WEATHER_DARK_MODE` environment variable if you want to eanble dark mode on the inkyshot.
 
 Use the `WEATHER_FONT` variable to customize the font used in weather display mode.
 

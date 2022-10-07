@@ -78,6 +78,24 @@ def create_mask(source):
                 mask_image.putpixel((x, y), 255)
     return mask_image
 
+def swap_two_colours(img, dark_mode=False):
+    """Swap two colours.
+    """
+    black = BLACK  
+    if dark_mode:
+        target = BLACK - 1    
+    else:
+        target = BLACK + 1
+    logging.info(f"Swapping colours {black} and {target}")
+    w, h = img.size
+    for x in range(w):
+        for y in range(h):
+            if img.getpixel((x, y)) == black:
+                img.putpixel((x, y), target)
+            elif img.getpixel((x, y)) == target:
+                img.putpixel((x, y), black)
+    return img
+
 # Declare non pip fonts here ** Note: ttf files need to be in the /fonts dir of application repo
 Grand9KPixel = "/usr/app/fonts/Grand9KPixel.ttf"
 
@@ -104,6 +122,7 @@ def draw_weather(weather, img, scale, fill):
     # Load weather icon
     icon_name = weather['symbol'].split('_')[0]
     time_of_day = ''
+    swap_colours = False
     # Couple of symbols have different icons for day and night. Check if this symbol is one of them.
     if len(weather['symbol'].split('_')) > 1:
         symbol_cycle = weather['symbol'].split('_')[1]
@@ -111,9 +130,13 @@ def draw_weather(weather, img, scale, fill):
             time_of_day = 'd'
         elif symbol_cycle == 'night':
             time_of_day = 'n'
+            swap_colours = True
     icon_filename = f"{icon_map[icon_name]:02}{time_of_day}.png"
     filepath = Path(__file__).parent / 'weather-icons' / icon_filename
     icon_image = Image.open(filepath)
+    if swap_colours:
+        logging.info("Swapping night weather icon black and colour pixels")
+        icon_image = swap_two_colours(icon_image)
     # Draw the weather icon
     if WEATHER_INVERT and WAVESHARE:
         icon_mask = create_mask(icon_image)
@@ -121,9 +144,9 @@ def draw_weather(weather, img, scale, fill):
         icon = Image.new('1', (100, 100), 255)
         icon.paste(icon_image, (0,0), icon_mask)
         icon_inverted = ImageOps.invert(icon.convert('RGB'))
-        img.paste(icon_inverted, (120 + X_OFFSET, 3 + Y_OFFSET))
+        img.paste(icon_inverted, (119 + X_OFFSET, 3 + Y_OFFSET))
     else:
-        img.paste(icon_image, (120 + X_OFFSET, 3 + Y_OFFSET))
+        img.paste(icon_image, (119 + X_OFFSET, 3 + Y_OFFSET))
     return img
 
 def get_current_display():
@@ -225,12 +248,12 @@ def set_current_display(val):
         logging.error(f"Failed to set current display to {val}. Error is: {err}")
 
 def temp_to_str(temp, scale):
-    """Prepare the temperature to draw based on the defined scale: Celcius or Fahrenheit"""
+    """Prepare the temperature to draw based on the defined scale: Celsius or Fahrenheit"""
     if scale == 'F':
-        temp = celcius_to_fahrenheit(temp)
+        temp = celsius_to_fahrenheit(temp)
     return f"{temp:.1f}"
 
-def celcius_to_fahrenheit(temp):
+def celsius_to_fahrenheit(temp):
     """Convert Celsius to Fahrenheit"""
     return temp * 9/5 + 32
 
@@ -273,7 +296,7 @@ WEATHER_INVERT = True if "WEATHER_INVERT" in os.environ else False
 SCALE = 'F' if "SCALE" in os.environ and os.environ["SCALE"] == 'F' else 'C'
 
 # Temperature threshold above which T is displayed in colour
-TEMP_THRESHOLD = 25 if SCALE == 'C' else celcius_to_fahrenheit(25)
+TEMP_THRESHOLD = 25 if SCALE == 'C' else celsius_to_fahrenheit(25)
 if "TEMP_THRESHOLD" in os.environ:
     TEMP_THRESHOLD = os.environ['TEMP_THRESHOLD']
 
@@ -315,15 +338,13 @@ else:
     HEIGHT = display.HEIGHT
     BLACK = display.BLACK
     WHITE = display.WHITE
-    if display.colour == "black":
-        COLOUR = BLACK
+    COLOUR = BLACK if display.colour == "black" else display.RED
+    if HEIGHT == 104:
         # Display size: W 212 x H 104
         X_OFFSET = 0
         Y_OFFSET = 0
         WEATHER_FONT_INCREASE = 0
     else:
-        # Both display.RED and display.YELLOW = 2
-        COLOUR = display.RED
         # Display size: W 250 x H 122
         # text margin is 3 + 1/3*X_OFFSET = 10 pixels from left border
         # weather icon is 250 - (120 + 21 + 100) = 9 pixels from right border 
@@ -367,7 +388,7 @@ if target_display == 'weather':
     os.environ['LATLONG'] = f"{LAT},{LONG}"
     # If weather is empty dictionary, fall back to drawing quote
     if len(weather) > 0:
-        temperature = weather['temperature'] if SCALE == 'C' else celcius_to_fahrenheit(weather['temperature'])
+        temperature = weather['temperature'] if SCALE == 'C' else celsius_to_fahrenheit(weather['temperature'])
         fill = COLOUR if temperature >= TEMP_THRESHOLD else BLACK
         img = draw_weather(weather, img, SCALE, fill)
     else:
@@ -443,6 +464,12 @@ elif target_display == 'quote':
 # Rotate and display the image
 if "ROTATE" in os.environ:
     img = img.rotate(180)
+
+# Enable dark mode 
+# #(it swaps the colour of the first two pixels in the palette)
+if "WEATHER_DARK_MODE" in os.environ and target_display == 'weather':
+    logging.info("Switching to dark mode")
+    img = swap_two_colours(img, dark_mode=True)
 
 if WAVESHARE:
     # epd does not have a set_image method.

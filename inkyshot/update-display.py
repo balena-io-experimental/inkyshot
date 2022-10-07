@@ -274,6 +274,9 @@ LOCALE = os.environ["LOCALE"] if "LOCALE" in os.environ else 'en'
 # Display mode of Inkyshot
 MODE = os.environ["MODE"] if "MODE" in os.environ else 'quote'
 
+# Black-only mode activated?
+BLACK_ONLY = True if "BLACK_ONLY" in os.environ else False
+
 # Read balena variables for balena API calls
 BALENA_API_KEY = os.environ["BALENA_API_KEY"]
 BALENA_DEVICE_UUID = os.environ["BALENA_DEVICE_UUID"]
@@ -306,6 +309,7 @@ else:
     HEIGHT = display.HEIGHT
     BLACK = display.BLACK
     WHITE = display.WHITE
+    RED = display.RED
     img = Image.new("P", (WIDTH, HEIGHT))
 
 draw = ImageDraw.Draw(img)
@@ -344,8 +348,10 @@ if target_display == 'weather':
     else:
         target_display = 'quote'
 elif target_display == 'quote':
+    display.set_border(display.BLACK)
     # Use a dashboard defined message if we have one, otherwise load a nice quote
     message = os.environ['INKY_MESSAGE'] if 'INKY_MESSAGE' in os.environ else None
+    author = ""
     # If message was set but blank, use the device name
     if message == "":
         message = os.environ['DEVICE_NAME']
@@ -356,13 +362,26 @@ elif target_display == 'quote':
                 headers={"Accept" : "application/json"}
             )
             data = response.json()
-            message = data['contents']['quotes'][0]['quote']
+            quote_object = data['contents']['quotes'][0]
+            message = quote_object['quote']
+            author = quote_object['author']
+  
         except requests.exceptions.RequestException as err:
             logging.error(err)
             FONT_SIZE = 25
             message = "Sorry folks, today's quote has gone walkies :("
 
+    # Footer to be reserved for printing author:
+    footer_padding_x = math.ceil(0.06 * WIDTH) if len(author) > 0 else 0
+    footer_padding_y = math.ceil(0.04 * HEIGHT) if len(author) > 0 else 0
+    AUTHOR_FONT = ImageFont.truetype(Roboto, 10)
+    x_a, y_a = draw.textsize(author, font=AUTHOR_FONT, spacing=0)
+    footer_height = y_a + 2 * footer_padding_y
+
     logging.info("Message: %s", message)
+    if len(author) > 0:
+        logging.info("Author: %s", author)
+    
     # Work out what size font is required to fit this message on the display
     message_does_not_fit = True
 
@@ -375,7 +394,7 @@ elif target_display == 'quote':
         message_width = 0
         FONT_SIZE -= 1
 
-        if FONT_SIZE <= 17:
+        if FONT_SIZE <= 14:
             FONT_SIZE = 8
             FONT = ImageFont.truetype("/usr/app/fonts/Grand9KPixel.ttf", FONT_SIZE)
 
@@ -386,7 +405,7 @@ elif target_display == 'quote':
             message_width, message_height = draw.textsize(test_message, font=FONT)
 
         max_width = len(test_message)
-        max_lines = math.floor(HEIGHT/message_height)
+        max_lines = math.floor((HEIGHT-footer_height)/message_height)
 
         # We wrap the message to the width we worked out earlier
         wrapper = textwrap.TextWrapper(width=max_width)
@@ -405,11 +424,17 @@ elif target_display == 'quote':
     separator = '\n'
     output_text = separator.join(word_list)
 
+    # Write quote:
     w, h = draw.multiline_textsize(output_text, font=FONT, spacing=0)
-
     x = (WIDTH - w)/2
-    y = (HEIGHT - h - offset_y)/2
-    draw.multiline_text((x, y), output_text, BLACK, FONT, align="center", spacing=0)
+    y = (HEIGHT - footer_height - h - offset_y)/2
+    # draw.multiline_text((x+FONT_SIZE/16, y+FONT_SIZE/16), output_text, RED, FONT, align="center", spacing=0)
+    quote_colour = BLACK if BLACK_ONLY else RED
+    draw.multiline_text((x, y), output_text, quote_colour, FONT, align="center", spacing=0)
+         
+    # Write author:
+    offset_x_a, offset_y_a = AUTHOR_FONT.getoffset(author)
+    draw.text((WIDTH - x_a - offset_x_a - footer_padding_x, HEIGHT - y_a - offset_y_a - footer_padding_y), author, fill=BLACK, font=AUTHOR_FONT)
 
 # Rotate and display the image
 if "ROTATE" in os.environ:

@@ -45,6 +45,12 @@ Is there a special occasion in your family? Override the daily quote with a shot
 
 The quote api has several quote categories available. Use the `QOD_CATEGORY` environment variable to change the type of quote retreived. Available categories: `inspire` (default), `management`, `sports`, `life`, `funny`, `love`, `art`, `students`.
 
+### Colour mode
+
+By default, the quote of the day (or message override) will be displayed in colour: red and yellow for the Red and Yellow Inkyphat displays respectively, or grey for the black & white Inkyphat. The author of the quote is always displayed in black.
+
+However, if you would like to revert to all the text on the display being black, you can set the environment variable `BLACK_ONLY` to 1.
+
 ### Font
 
 There are a few fonts built in that you can try. The default is `AmaticSC`, but you can use the `FONT` variable and set it to any of: `FredokaOne`, `HankenGrotesk`, `Intuitive`, `SourceSerifPro`, `SourceSansPro`, `Caladea`, `Roboto` and `Grand9KPixel`. You're welcome to PR more options into the project!

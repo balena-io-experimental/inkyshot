@@ -1,0 +1,620 @@
+- commits:
+    - subject: Switch from balenaCI to flowzone
+      hash: 377f69ddb58164acf964aeb494ec543ef9656768
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Pagan Gazzard
+  version: 1.3.15
+  title: ""
+  date: 2022-10-10T18:01:07.523Z
+- version: 1.3.14
+  date: 2022-02-23T02:01:00Z
+  commits:
+    - hash: f5496498aba9f8d67293f5cd8db5984ca194f7bd
+      author: Kyle Harding
+      footers:
+        change-type: patch
+        signed-off-by: Kyle Harding <kyle@balena.io>
+      subject: Switch to balena hostname block
+      body: null
+- version: 1.3.13
+- date: 2021-12-21T10:50:07Z
+- commits:
+    - hash: e2dbbff1d3dbe915f5a83cb637bb2aba7ceba286
+- commits:
+    - author: Chris Crocker-White
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - footers:
+        signed-off-by: Chris Crocker-White <chriscw@balena.io>
+- commits:
+    - subject: Bump inky and pillow
+- commits:
+    - ? body
+- version: 1.3.12
+- date: 2021-07-05T13:47:08Z
+- commits:
+    - hash: 9ffb146c2a5d5cdf2145020265a08d3528063c9f
+- commits:
+    - author: Vipul Gupta
+- commits:
+    - subject: "patch: Delete Codeowners"
+- commits:
+    - ? body
+- version: 1.3.11
+- date: 2021-06-29T16:40:46Z
+- commits:
+    - hash: 3727d094ea1b8517d6c0cd18610e2e371d1b7f31
+- commits:
+    - author: Kyle Harding
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - footers:
+        signed-off-by: Kyle Harding <kyle@balena.io>
+- commits:
+    - subject: "inkyshot: Set hostname via supervisor API"
+- commits:
+    - ? body
+- version: 1.3.10
+- date: 2021-06-15T10:28:34Z
+- commits:
+    - hash: 2f9c60bac0c4e807aaa6210e096bc8831f7cdd6f
+- commits:
+    - author: Louis
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - subject: Updated ReadMe
+- commits:
+    - ? body
+- commits:
+    - hash: 5ed42ab1aabdc9961d4a0be6d4749eb21ac97708
+- commits:
+    - author: Chris Crocker-White
+- commits:
+    - subject: Merge branch 'master' into ReadMe-Changes
+- commits:
+    - ? body
+- version: 1.3.9
+- date: 2021-06-15T10:15:43Z
+- commits:
+    - hash: fe642dfd630c4a0bb873765fcf7e986ee574df8f
+- commits:
+    - author: Louis
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - subject: Added Weather_Invert for Waveshare which inverts the pixels
+- commits:
+    - ? body
+- commits:
+    - hash: 5145fdb6e54641a09799f27e2c80a79812dcf881
+- commits:
+    - author: Chris Crocker-White
+- commits:
+    - subject: Merge branch 'master' into Weather-Image-Inverted
+- commits:
+    - ? body
+- version: 1.3.8
+- date: 2021-06-14T12:35:50Z
+- commits:
+    - hash: 65cc96341c7503a3b715c6e9fbfdbdcf3f351791
+- commits:
+    - author: Louis
+- commits:
+    - footers:
+        connects-to: "#48"
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - subject: Fixed BLACK & WHITE pixels
+- commits:
+    - ? body
+- commits:
+    - hash: 188d90a0ee934cf714bcfea4a62eb376558cb5ad
+- commits:
+    - author: Chris Crocker-White
+- commits:
+    - subject: Merge branch 'master' into Waveshare-ICON
+- commits:
+    - ? body
+- version: 1.3.7
+- date: 2021-06-14T12:30:00Z
+- commits:
+    - hash: f533d9abd3e98354c3d4df4e2137049491211fc4
+- commits:
+    - author: Chris Crocker-White
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - footers:
+        signed-off-by: Chris Crocker-White <chriscw@balena.io>
+- commits:
+    - subject: Disable build check
+- commits:
+    - ? body
+- version: 1.3.6
+- date: 2021-05-13T13:47:41Z
+- commits:
+    - hash: c0b85b16b97de20e6442fe6d5db9530550cc578d
+- commits:
+    - author: Tomás Migone
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - footers:
+        signed-off-by: Tomás Migone <tomas@balena.io>
+- commits:
+    - subject: "hub: change instructions to h2"
+- commits:
+    - ? body
+- version: 1.3.5
+- date: 2021-05-13T13:38:17Z
+- commits:
+    - hash: 2c9c9a17c12b9ac11dd6b3065588497d85854d95
+- commits:
+    - author: Tomás Migone
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - footers:
+        signed-off-by: Tomás Migone <tomas@balena.io>
+- commits:
+    - subject: "hub: Add metadata for open fleets"
+- commits:
+    - ? body
+- version: 1.3.4
+- date: 2021-02-02T12:33:24Z
+- commits:
+    - hash: 31373916108ef2edf2fc5dca81473eccd7b25440
+- commits:
+    - author: Chris Crocker-White
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - footers:
+        signed-off-by: Chris Crocker-White <chriscw@balena.io>
+- commits:
+    - subject: Update balena.yml to new format
+- commits:
+    - ? body
+- version: 1.3.3
+- date: 2020-12-28T12:58:41Z
+- commits:
+    - hash: 0eddc49b736a90aaea51b4cea55d5a81a74cb099
+- commits:
+    - author: gelbal
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - footers:
+        signed-off-by: Fırat Gelbal firat@balena.io
+- commits:
+    - subject: Don't overwrite custom message
+- commits:
+    - ? body
+- version: 1.3.2
+- date: 2020-12-18T20:13:21Z
+- commits:
+    - hash: 0abfc7b489fb767758e210272d7581978e12d22d
+- commits:
+    - author: gelbal
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - footers:
+        signed-off-by: Fırat Gelbal firat@balena.io
+- commits:
+    - subject: Enable supervisor API access
+- commits:
+    - ? body
+- version: 1.3.1
+- date: 2020-12-18T13:07:39Z
+- commits:
+    - hash: 9940b97bbe96e92e8a87124f119da6cfcd0595df
+- commits:
+    - author: gelbal
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - footers:
+        signed-off-by: Fırat Gelbal firat@balena.io
+- commits:
+    - subject: Add user-agent to weather API calls
+- commits:
+    - body: As the API has this restriction
+- version: 1.3.0
+- date: 2020-12-18T12:55:44Z
+- commits:
+    - hash: 3f7506ab1feb2b7ee9439f840991e63d75e73b97
+- commits:
+    - author: gelbal
+- commits:
+    - footers:
+        change-type: minor
+- commits:
+    - footers:
+        signed-off-by: Fırat Gelbal firat@balena.io
+- commits:
+    - subject: Alternate between quote and weather modes
+- commits:
+    - body: |-
+        Simplify the alternate logic
+        Use device tags instead env vars
+- version: 1.2.1
+- date: 2020-12-17T13:36:11Z
+- commits:
+    - hash: 6e2d2b693fcdf3b0f84b8d214e948c814f660a5a
+- commits:
+    - author: Chris Crocker-White
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - footers:
+        signed-off-by: Chris Crocker-White <chriscw@balena.io>
+- commits:
+    - subject: Add balena.yml and logo (hub)
+- commits:
+    - ? body
+- version: 1.2.0
+- date: 2020-12-08T12:30:59Z
+- commits:
+    - hash: 669b43ad88885f11f3d837f74e8f3b30e278a46f
+- commits:
+    - author: Rahul Thakoor
+- commits:
+    - footers:
+        change-type: minor
+- commits:
+    - footers:
+        signed-off-by: Rahul Thakoor <rahul@balena.io>
+- commits:
+    - subject: Use wifi-connect block
+- commits:
+    - ? body
+- version: 1.1.1
+- date: 2020-12-07T16:03:15Z
+- commits:
+    - hash: d069009844feef0ada0d56038b42664b811d08fc
+- commits:
+    - author: Catt
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - subject: Add additional fonts
+- commits:
+    - body: "<Fonts Additions>\r
+
+        \r
+
+        Adding fonts with Cyrillic alphabet support\r
+
+        \r"
+- version: 1.1.0
+- date: 2020-10-20T17:22:35Z
+- commits:
+    - hash: 9557fd460c166fb4fd9d23f47b86f5ae25684835
+- commits:
+    - author: Chris Crocker-White
+- commits:
+    - footers:
+        change-type: minor
+- commits:
+    - footers:
+        signed-off-by: Chris Crocker-White <chriscw@balena.io>
+- commits:
+    - subject: Add support for latest Inky(X)HAT boards
+- commits:
+    - ? body
+- version: 1.0.1
+- date: 2020-10-14T17:20:44Z
+- commits:
+    - hash: 531062e841863f60a2f76d4365b653dd4e58e9da
+- commits:
+    - author: gelbal
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - footers:
+        signed-off-by: Fırat Gelbal firat@balena.io
+- commits:
+    - subject: Fix the weather icon symbol lookup
+- commits:
+    - ? body
+- version: 1.0.0
+- date: 2020-10-13T09:46:34Z
+- commits:
+    - hash: e1ad3e33e40dd5f1697a469c57ed2926e2444756
+- commits:
+    - author: gelbal
+- commits:
+    - footers:
+        change-type: major
+- commits:
+    - footers:
+        signed-off-by: Fırat Gelbal firat@balena.io
+- commits:
+    - subject: Display weather forecast with icons
+- commits:
+    - ? body
+- version: 0.4.2
+- date: 2020-10-01T16:50:55Z
+- commits:
+    - hash: 67953c01ba1d77b582e34ffd8bd8641987fe01d8
+- commits:
+    - author: Sam Eureka
+- commits:
+    - footers:
+        connects-to: "#17"
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - footers:
+        signed-off-by: Sam Dennon <sam@dennon.me>
+- commits:
+    - subject: redirect cron stdout to docker
+- commits:
+    - ? body
+- version: 0.4.1
+- date: 2020-10-01T12:08:38Z
+- commits:
+    - hash: 68c1972f3cb1b70be1034821a439121c911d75c3
+- commits:
+    - author: Chris Crocker-White
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - footers:
+        signed-off-by: Chris Crocker-White <chriscw@balena.io>
+- commits:
+    - subject: "[Readme] Add screw information & update DWB"
+- commits:
+    - ? body
+- version: 0.4.0
+- date: 2020-10-01T10:52:59Z
+- commits:
+    - hash: b9b0ce394a57282f1d0c5a784fab3c86890374e8
+- commits:
+    - author: Sam Eureka
+- commits:
+    - footers:
+        connects-to: "#6"
+- commits:
+    - footers:
+        change-type: minor
+- commits:
+    - footers:
+        signed-off-by: Sam Dennon <sam@dennon.me>
+- commits:
+    - subject: added selectable Grand9kPixel font
+- commits:
+    - ? body
+- commits:
+    - hash: cb105ee0445f90ca7a640304cd06cd1174280c58
+- commits:
+    - author: Chris Crocker-White
+- commits:
+    - subject: Merge branch 'master' into add-select-pixel-font
+- commits:
+    - ? body
+- version: 0.3.0
+- date: 2020-10-01T10:14:04Z
+- commits:
+    - hash: 71050de50aefe671d60c677f471534790e68c2a1
+- commits:
+    - author: Sam Eureka
+- commits:
+    - footers:
+        connects-to: "#18"
+- commits:
+    - footers:
+        change-type: minor
+- commits:
+    - footers:
+        signed-off-by: Sam Dennon <sam@dennon.me>
+- commits:
+    - subject: added quote category env variable
+- commits:
+    - ? body
+- version: 0.2.3
+- date: 2020-09-09T10:15:23Z
+- commits:
+    - hash: dfabdfa1bb5405deab81af11c6cccf72254a0237
+- commits:
+    - author: Chris Crocker-White
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - footers:
+        signed-off-by: Chris Crocker-White <chriscw@balena.io>
+- commits:
+    - subject: If message is blank, use device name
+- commits:
+    - ? body
+- version: 0.2.2
+- date: 2020-06-19T13:29:39Z
+- commits:
+    - hash: f344b95a606f335639e4d04c616273aa37b53e0b
+- commits:
+    - author: Chris Crocker-White
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - footers:
+        signed-off-by: Chris Crocker-White <chriscw@balena.io>
+- commits:
+    - subject: Add extra logging of message and font size
+- commits:
+    - ? body
+- version: 0.2.1
+- date: 2020-06-16T15:18:33Z
+- commits:
+    - hash: 27628cf6978b768935ddf34bc9bb08f297822583
+- commits:
+    - author: Chris Crocker-White
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - footers:
+        signed-off-by: Chris Crocker-White <chriscw@balena.io>
+- commits:
+    - subject: Update README with Waveshare support
+- commits:
+    - body: "Fixes #13"
+- version: 0.2.0
+- date: 2020-06-16T15:04:30Z
+- commits:
+    - hash: 999746df47a26bd7422ccdd5eff28d0eda985ce9
+- commits:
+    - author: Larry Matter
+- commits:
+    - footers:
+        change-type: minor
+- commits:
+    - footers:
+        signed-off-by: Larry Matter <larry.matter@gmail.com>
+- commits:
+    - subject: Added support for Waveshare e-paper.
+- commits:
+    - body: Set WAVESHARE env var.  Requires epd2in13.py library from Waveshare.
+- commits:
+    - hash: 9b97f642c046fc22d50497a7d1664fa094d843c4
+- commits:
+    - author: Chris Crocker-White
+- commits:
+    - footers:
+        change-type: minor
+- commits:
+    - footers:
+        signed-off-by: Chris Crocker-White <chriscw@balena.io>
+- commits:
+    - subject: Add libraries for Waveshare 2.13" display
+- commits:
+    - ? body
+- version: 0.1.0
+- date: 2020-06-07T12:03:18Z
+- commits:
+    - hash: 0d63ea2a1142971f2c3c0d460ca8695a3150296d
+- commits:
+    - author: Chris Crocker-White
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - footers:
+        signed-off-by: Chris Crocker-White <chriscw@balena.io>
+- commits:
+    - subject: Add absolute font path
+- commits:
+    - body: "Fixes #11"
+- commits:
+    - hash: 91748d5cf166f6f80ecfd983eda201810d863414
+- commits:
+    - author: Chris Crocker-White
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - footers:
+        signed-off-by: Chris Crocker-White <chriscw@balena.io>
+- commits:
+    - subject: Organize and add more case designs
+- commits:
+    - ? body
+- commits:
+    - hash: 18902b7f74e119ea8730f7cc59975c7c0dfb9de4
+- commits:
+    - author: Chris Crocker-White
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - footers:
+        signed-off-by: Chris Crocker-White <chriscw@balena.io>
+- commits:
+    - subject: Add pixel font for long messages
+- commits:
+    - ? body
+- commits:
+    - hash: b4f66c6a503c5ece4a6187cd34d1d8b47a6b593e
+- commits:
+    - author: Chris Crocker-White
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - footers:
+        signed-off-by: Chris Crocker-White <chriscw@balena.io>
+- commits:
+    - subject: Add hardware image to readme
+- commits:
+    - ? body
+- commits:
+    - hash: 92e5a3be463e68d7b83838f7841a651d9cd27a9a
+- commits:
+    - author: Chris Crocker-White
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - footers:
+        signed-off-by: Chris Crocker-White <chriscw@balena.io>
+- commits:
+    - subject: Update readme to mention rotation
+- commits:
+    - ? body
+- commits:
+    - hash: ef4f2179f6ee86d8581cb198e57f258c48484e73
+- commits:
+    - author: Chris Crocker-White
+- commits:
+    - footers:
+        change-type: minor
+- commits:
+    - footers:
+        signed-off-by: Chris Crocker-White <chriscw@balena.io>
+- commits:
+    - subject: Housekeeping, add readme, ignore files
+- commits:
+    - ? body
+- commits:
+    - hash: 0bd60026ffb399cbcb88d6a05c0c758aad3a2929
+- commits:
+    - author: Chris Crocker-White
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - footers:
+        signed-off-by: Chris Crocker-White <chriscw@balena.io>
+- commits:
+    - subject: Add scheduler
+- commits:
+    - body: |-
+        Only update the quote once per day, specify hour with UPDATE_HOUR
+        Set container timezone with TZ (e.g. America/Los_Angeles)
+        Run update once on container start to allow for INKY_MESSAGE override

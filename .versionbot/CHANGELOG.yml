@@ -1,4 +1,22 @@
 - commits:
+    - subject: Add function that swaps two colours. Swap the black and colour pixels
+        of night weather icons. Add `DARK_MODE` as environment variable. It
+        swaps black and white pixels of the final image. Make weather text
+        scaling and icon positioning based on display height. Make swap colours
+        False by defualt. Fix 02d.png and 02n.png position for small screens.
+        Limit dark mode to weather mode. Update README. Switch to flowzone.
+      hash: 965865a69319705d0e223677939294e8ff8f6e74
+      body: ""
+      footer:
+        Change-type: minor
+        change-type: minor
+        Signed-off-by: Genadi Naydenov <genadi@balena.io>
+        signed-off-by: Genadi Naydenov <genadi@balena.io>
+      author: Genadi Naydenov
+      nested: []
+  version: 1.4.0
+  date: 2022-10-11T09:46:28.857Z
+- commits:
     - subject: Switch from balenaCI to flowzone
       hash: 377f69ddb58164acf964aeb494ec543ef9656768
       body: ""

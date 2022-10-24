@@ -1,4 +1,17 @@
 - commits:
+    - subject: Updating references from balenalabs to balena-labs-projects
+      hash: 8d43f69d252a612c40529f930d8003e354599d9e
+      body: ""
+      footer:
+        Signed-off-by: Flynn Joffray <flynn@balena.io>
+        signed-off-by: Flynn Joffray <flynn@balena.io>
+        Change-type: patch
+        change-type: patch
+      author: Flynn Joffray
+  version: 1.3.16
+  title: ""
+  date: 2022-10-24T20:56:12.231Z
+- commits:
     - subject: Switch from balenaCI to flowzone
       hash: 377f69ddb58164acf964aeb494ec543ef9656768
       body: ""
@@ -34,7 +47,7 @@
 - commits:
     - subject: Bump inky and pillow
 - commits:
-    - ? body
+    - body: null
 - version: 1.3.12
 - date: 2021-07-05T13:47:08Z
 - commits:
@@ -44,7 +57,7 @@
 - commits:
     - subject: "patch: Delete Codeowners"
 - commits:
-    - ? body
+    - body: null
 - version: 1.3.11
 - date: 2021-06-29T16:40:46Z
 - commits:
@@ -60,7 +73,7 @@
 - commits:
     - subject: "inkyshot: Set hostname via supervisor API"
 - commits:
-    - ? body
+    - body: null
 - version: 1.3.10
 - date: 2021-06-15T10:28:34Z
 - commits:
@@ -73,7 +86,7 @@
 - commits:
     - subject: Updated ReadMe
 - commits:
-    - ? body
+    - body: null
 - commits:
     - hash: 5ed42ab1aabdc9961d4a0be6d4749eb21ac97708
 - commits:
@@ -81,7 +94,7 @@
 - commits:
     - subject: Merge branch 'master' into ReadMe-Changes
 - commits:
-    - ? body
+    - body: null
 - version: 1.3.9
 - date: 2021-06-15T10:15:43Z
 - commits:
@@ -94,7 +107,7 @@
 - commits:
     - subject: Added Weather_Invert for Waveshare which inverts the pixels
 - commits:
-    - ? body
+    - body: null
 - commits:
     - hash: 5145fdb6e54641a09799f27e2c80a79812dcf881
 - commits:
@@ -102,7 +115,7 @@
 - commits:
     - subject: Merge branch 'master' into Weather-Image-Inverted
 - commits:
-    - ? body
+    - body: null
 - version: 1.3.8
 - date: 2021-06-14T12:35:50Z
 - commits:
@@ -118,7 +131,7 @@
 - commits:
     - subject: Fixed BLACK & WHITE pixels
 - commits:
-    - ? body
+    - body: null
 - commits:
     - hash: 188d90a0ee934cf714bcfea4a62eb376558cb5ad
 - commits:
@@ -126,7 +139,7 @@
 - commits:
     - subject: Merge branch 'master' into Waveshare-ICON
 - commits:
-    - ? body
+    - body: null
 - version: 1.3.7
 - date: 2021-06-14T12:30:00Z
 - commits:
@@ -142,7 +155,7 @@
 - commits:
     - subject: Disable build check
 - commits:
-    - ? body
+    - body: null
 - version: 1.3.6
 - date: 2021-05-13T13:47:41Z
 - commits:
@@ -158,7 +171,7 @@
 - commits:
     - subject: "hub: change instructions to h2"
 - commits:
-    - ? body
+    - body: null
 - version: 1.3.5
 - date: 2021-05-13T13:38:17Z
 - commits:
@@ -174,7 +187,7 @@
 - commits:
     - subject: "hub: Add metadata for open fleets"
 - commits:
-    - ? body
+    - body: null
 - version: 1.3.4
 - date: 2021-02-02T12:33:24Z
 - commits:
@@ -190,7 +203,7 @@
 - commits:
     - subject: Update balena.yml to new format
 - commits:
-    - ? body
+    - body: null
 - version: 1.3.3
 - date: 2020-12-28T12:58:41Z
 - commits:
@@ -206,7 +219,7 @@
 - commits:
     - subject: Don't overwrite custom message
 - commits:
-    - ? body
+    - body: null
 - version: 1.3.2
 - date: 2020-12-18T20:13:21Z
 - commits:
@@ -222,7 +235,7 @@
 - commits:
     - subject: Enable supervisor API access
 - commits:
-    - ? body
+    - body: null
 - version: 1.3.1
 - date: 2020-12-18T13:07:39Z
 - commits:
@@ -272,7 +285,7 @@
 - commits:
     - subject: Add balena.yml and logo (hub)
 - commits:
-    - ? body
+    - body: null
 - version: 1.2.0
 - date: 2020-12-08T12:30:59Z
 - commits:
@@ -288,7 +301,7 @@
 - commits:
     - subject: Use wifi-connect block
 - commits:
-    - ? body
+    - body: null
 - version: 1.1.1
 - date: 2020-12-07T16:03:15Z
 - commits:
@@ -323,7 +336,7 @@
 - commits:
     - subject: Add support for latest Inky(X)HAT boards
 - commits:
-    - ? body
+    - body: null
 - version: 1.0.1
 - date: 2020-10-14T17:20:44Z
 - commits:
@@ -339,7 +352,7 @@
 - commits:
     - subject: Fix the weather icon symbol lookup
 - commits:
-    - ? body
+    - body: null
 - version: 1.0.0
 - date: 2020-10-13T09:46:34Z
 - commits:
@@ -355,7 +368,7 @@
 - commits:
     - subject: Display weather forecast with icons
 - commits:
-    - ? body
+    - body: null
 - version: 0.4.2
 - date: 2020-10-01T16:50:55Z
 - commits:
@@ -374,7 +387,7 @@
 - commits:
     - subject: redirect cron stdout to docker
 - commits:
-    - ? body
+    - body: null
 - version: 0.4.1
 - date: 2020-10-01T12:08:38Z
 - commits:
@@ -390,7 +403,7 @@
 - commits:
     - subject: "[Readme] Add screw information & update DWB"
 - commits:
-    - ? body
+    - body: null
 - version: 0.4.0
 - date: 2020-10-01T10:52:59Z
 - commits:
@@ -409,7 +422,7 @@
 - commits:
     - subject: added selectable Grand9kPixel font
 - commits:
-    - ? body
+    - body: null
 - commits:
     - hash: cb105ee0445f90ca7a640304cd06cd1174280c58
 - commits:
@@ -417,7 +430,7 @@
 - commits:
     - subject: Merge branch 'master' into add-select-pixel-font
 - commits:
-    - ? body
+    - body: null
 - version: 0.3.0
 - date: 2020-10-01T10:14:04Z
 - commits:
@@ -436,7 +449,7 @@
 - commits:
     - subject: added quote category env variable
 - commits:
-    - ? body
+    - body: null
 - version: 0.2.3
 - date: 2020-09-09T10:15:23Z
 - commits:
@@ -452,7 +465,7 @@
 - commits:
     - subject: If message is blank, use device name
 - commits:
-    - ? body
+    - body: null
 - version: 0.2.2
 - date: 2020-06-19T13:29:39Z
 - commits:
@@ -468,7 +481,7 @@
 - commits:
     - subject: Add extra logging of message and font size
 - commits:
-    - ? body
+    - body: null
 - version: 0.2.1
 - date: 2020-06-16T15:18:33Z
 - commits:
@@ -514,7 +527,7 @@
 - commits:
     - subject: Add libraries for Waveshare 2.13" display
 - commits:
-    - ? body
+    - body: null
 - version: 0.1.0
 - date: 2020-06-07T12:03:18Z
 - commits:
@@ -544,7 +557,7 @@
 - commits:
     - subject: Organize and add more case designs
 - commits:
-    - ? body
+    - body: null
 - commits:
     - hash: 18902b7f74e119ea8730f7cc59975c7c0dfb9de4
 - commits:
@@ -558,7 +571,7 @@
 - commits:
     - subject: Add pixel font for long messages
 - commits:
-    - ? body
+    - body: null
 - commits:
     - hash: b4f66c6a503c5ece4a6187cd34d1d8b47a6b593e
 - commits:
@@ -572,7 +585,7 @@
 - commits:
     - subject: Add hardware image to readme
 - commits:
-    - ? body
+    - body: null
 - commits:
     - hash: 92e5a3be463e68d7b83838f7841a651d9cd27a9a
 - commits:
@@ -586,7 +599,7 @@
 - commits:
     - subject: Update readme to mention rotation
 - commits:
-    - ? body
+    - body: null
 - commits:
     - hash: ef4f2179f6ee86d8581cb198e57f258c48484e73
 - commits:
@@ -600,7 +613,7 @@
 - commits:
     - subject: Housekeeping, add readme, ignore files
 - commits:
-    - ? body
+    - body: null
 - commits:
     - hash: 0bd60026ffb399cbcb88d6a05c0c758aad3a2929
 - commits:

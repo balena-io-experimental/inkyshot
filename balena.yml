@@ -13,11 +13,11 @@ assets:
   repository:
     type: blob.asset
     data:
-      url: 'https://github.com/balenalabs/inkyshot'
+      url: 'https://github.com/balena-labs-projects/inkyshot'
   logo:
     type: blob.asset
     data:
-      url: 'https://raw.githubusercontent.com/balenalabs/inkyshot/master/logo.png'
+      url: 'https://raw.githubusercontent.com/balena-labs-projects/inkyshot/master/logo.png'
 data:
   applicationEnvironmentVariables:
     - UPDATE_HOUR: 9

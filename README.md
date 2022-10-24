@@ -1,12 +1,12 @@
 # Inkyshot - a shot of inspiration to start the day
 
-![](https://raw.githubusercontent.com/balenalabs-incubator/inkyshot/master/assets/header-photo.jpg)
+![](https://raw.githubusercontent.com/balena-labs-projects/inkyshot/master/assets/header-photo.jpg)
 
 **Get a daily random inspirational quote delivered direct to your desk with Inkyshot. Build multiple Inkyshots and share the inspiration with your friends, family and loved ones ❤️**
 
 ## Hardware required
 
-![](https://raw.githubusercontent.com/balenalabs-incubator/inkyshot/master/assets/hardware-photo.jpg)
+![](https://raw.githubusercontent.com/balena-labs-projects/inkyshot/master/assets/hardware-photo.jpg)
 
 - Raspberry Pi (tested with Zero and 3B so far)
 - [Pimoroni InkyPHAT display](https://shop.pimoroni.com/products/inky-phat?variant=12549254938707)
@@ -19,7 +19,7 @@
 
 Running this project is as simple as deploying it to a balenaCloud application. You can do it in just one click by using the button below:
 
-[![](https://balena.io/deploy.png)](https://dashboard.balena-cloud.com/deploy?repoUrl=https://github.com/balenalabs/inkyshot)
+[![](https://balena.io/deploy.png)](https://dashboard.balena-cloud.com/deploy?repoUrl=https://github.com/balena-labs-projects/inkyshot)
 
 You can also deploy in the traditional manner using the balena CLI and `balena push` command. For more information [check out the docs](https://www.balena.io/docs/learn/deploy/deployment/).
 
@@ -91,13 +91,13 @@ As from v1.2.0 this project includes [wifi-connect](https://github.com/balena-io
 
 STL files are included within the assets folder of the project for you to 3D print your own case.
 
-![](https://raw.githubusercontent.com/balenalabs-incubator/inkyshot/master/assets/inky-print.png)
+![](https://raw.githubusercontent.com/balena-labs-projects/inkyshot/master/assets/inky-print.png)
 
 The case has two positions for a captive M3 nut, and can be fastened together with two countersunk 8mm M3 machine screws. If you're using design 2, the screws you'll need are something [like this](https://www.accu.co.uk/en/self-tapping-raised-torx-screws/21738-SHRKT-No-2-1-2-A2).
 
 A position is open in the rear of the case for the use of a [micro USB PCB socket](https://www.aliexpress.com/item/4000484202812.html), allowing for direct connection of power to the back of a Raspberry Pi Zero.
 
-![](https://raw.githubusercontent.com/balenalabs-incubator/inkyshot/master/assets/inky-rear.png)
+![](https://raw.githubusercontent.com/balena-labs-projects/inkyshot/master/assets/inky-rear.png)
 
 ## Contributing & Commit structure
 

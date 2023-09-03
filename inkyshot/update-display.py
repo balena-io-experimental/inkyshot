@@ -81,6 +81,7 @@ def create_mask(source):
 # Declare non pip fonts here ** Note: ttf files need to be in the /fonts dir of application repo
 Grand9KPixel = "/usr/app/fonts/Grand9KPixel.ttf"
 NotoEmoji = "/usr/app/fonts/NotoEmoji-Regular.ttf"
+OpenSansEmoji = "/usr/app/fonts/OpenSansEmoji.ttf"
 
 def draw_weather(weather, img, scale):
     """Draw the weather info on screen"""

@@ -80,8 +80,10 @@ def create_mask(source):
 
 # Declare non pip fonts here ** Note: ttf files need to be in the /fonts dir of application repo
 Grand9KPixel = "/usr/app/fonts/Grand9KPixel.ttf"
-NotoEmoji = "/usr/app/fonts/NotoEmoji-Regular.ttf"
-OpenSansEmoji = "/usr/app/fonts/OpenSansEmoji.ttf"
+Bookerly_Regular = "usr/app/fonts/Bookerly-Regular.ttf"
+Bookerly_RegularItalic = "usr/app/fonts/Bookerly-RegularItalic.ttf"
+Bookerly_Bold = "usr/app/fonts/Bookerly-Bold.ttf"
+Bookerly_BoldItalic = "usr/app/fonts/Bookerly-BoldItalic.ttf"
 
 def draw_weather(weather, img, scale):
     """Draw the weather info on screen"""

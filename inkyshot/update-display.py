@@ -4,9 +4,12 @@ import math
 from pathlib import Path
 import os
 from os import environ
+from os.path import exists
+from random import randint
 import sys
 import textwrap
 import time
+import csv
 
 from font_amatic_sc import AmaticSC
 from font_caladea import Caladea
@@ -141,6 +144,22 @@ def get_current_display():
         logging.error(err)
     return current_display
 
+def get_csv_index():
+    """Query device supervisor API to retrieve the csv_index (to override citation choice)"""
+    # This function can be merged with get_current_display() by accepting a variable as the key to get.
+    url = f"{BALENA_SUPERVISOR_ADDRESS}/v2/device/tags?apikey={BALENA_SUPERVISOR_API_KEY}"
+    headers = {"Accept": "application/json"}
+    csv_index = None
+    try:
+        response = requests.get(url, headers=headers)
+        if response.status_code == 200:
+            data = response.json()
+            if "tags" in data:
+                csv_index = next((t['value'] for t in data['tags'] if t['name'] == "csv_index"), None)
+    except requests.exceptions.RequestException as err:
+        logging.error(err)
+    return csv_index
+
 def get_location():
     """Return coordinate and location info based on IP address"""
     url = "https://ipinfo.io"
@@ -214,6 +233,31 @@ def set_current_display(val):
             current_display = get_current_display()
             if current_display:
                 if current_display == val:
+                    # No need to modify the tag
+                    return None
+                # Let's modify the existing tag with the new val
+                requests.patch(url_device_tag, data=request_data, headers=headers)
+            else:
+                # No tag exists yet, so let's create it
+                requests.post(url_device_tag, data=request_data, headers=headers)
+    except requests.exceptions.RequestException as err:
+        logging.error(f"Failed to set current display to {val}. Error is: {err}")
+
+def set_csv_index(val):
+    """Update the csv_index to get a random one to increment each display update"""
+    # First get device identifier for future call
+    url_device = f"https://api.balena-cloud.com/v5/device?$filter=uuid eq '{BALENA_DEVICE_UUID}'&$select=id"
+    url_device_tag = "https://api.balena-cloud.com/v5/device_tag"
+    headers = {"Accept": "application/json", "Authorization": f"Bearer {BALENA_API_KEY}"}
+    try:
+        response = requests.get(url_device, headers=headers)
+        if response.status_code == 200:
+            data = response.json()
+            device_id = data['d'][0]['id'] if 'd' in data and len(data['d']) > 0 else None
+            request_data = {"device": device_id, "tag_key": "csv_index", "value": val } #I don't understand why you put it twice in set_currrent_display()
+            csv_index = get_csv_index()
+            if csv_index:
+                if csv_index == val:
                     # No need to modify the tag
                     return None
                 # Let's modify the existing tag with the new val
@@ -349,6 +393,26 @@ elif target_display == 'quote':
     # If message was set but blank, use the device name
     if message == "":
         message = os.environ['DEVICE_NAME']
+    elif 'CSV_MESSAGE' in os.environ :
+        csv_list = os.environ['CSV_MESSAGE'].split(delimiter = os.environ['CSV_DELIMITER'] if 'CSV_DELIMITER' in os.environ else ";" ) # Works with \n also (if csv is 1 column of X rows)
+    elif 'CSV_LOCAL_NAME' in os.environ :
+        # If user wants to use a local file instead
+        path_to_csv_file = "/usr/app/quotes/"+os.environ['CSV_LOCAL_NAME']
+        if exists(path_to_csv_file) :
+            with open(path_to_csv_file) as csvfile : # TODO: May be broken, need to be tested with relative path
+                csv_list = list(csv.reader(csvfile, delimiter = os.environ['CSV_DELIMITER'] if 'CSV_DELIMITER' in os.environ else ";"))
+    if csv_list :
+        number_of_quotes = len(csv_list)
+        csv_index = get_csv_index()
+        if csv_index :
+            # User want to choose which quote will be displayed, he overrides it by setting the csv_index value
+            message = csv_list[csv_index]
+            # Update index for tomorrow and cycle
+            set_csv_index(csv_index+1 if csv_index!= number_of_quotes-1 else 0)
+        else :
+            csv_index = randint(0,number_of_quotes-1)
+            set_csv_index(csv_index)
+            message = csv_list[csv_index]
     elif message is None:
         try:
             response = requests.get(
@@ -377,7 +441,7 @@ elif target_display == 'quote':
 
         if FONT_SIZE <= 17:
             FONT_SIZE = 8
-            FONT = ImageFont.truetype("/usr/app/fonts/Grand9KPixel.ttf", FONT_SIZE)
+            FONT = ImageFont.truetype(Grand9KPixel, FONT_SIZE)
 
         # We're using the test character here to work out how many characters
         # can fit on the display when using the chosen font

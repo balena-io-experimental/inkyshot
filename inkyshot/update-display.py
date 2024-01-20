@@ -78,32 +78,51 @@ def create_mask(source):
                 mask_image.putpixel((x, y), 255)
     return mask_image
 
+def swap_two_colours(img, dark_mode=False):
+    """Swap two colours.
+    """
+    black = BLACK  
+    if dark_mode:
+        target = BLACK - 1    
+    else:
+        target = BLACK + 1
+    logging.info(f"Swapping colours {black} and {target}")
+    w, h = img.size
+    for x in range(w):
+        for y in range(h):
+            if img.getpixel((x, y)) == black:
+                img.putpixel((x, y), target)
+            elif img.getpixel((x, y)) == target:
+                img.putpixel((x, y), black)
+    return img
+
 # Declare non pip fonts here ** Note: ttf files need to be in the /fonts dir of application repo
 Grand9KPixel = "/usr/app/fonts/Grand9KPixel.ttf"
 
-def draw_weather(weather, img, scale):
+def draw_weather(weather, img, scale, fill):
     """Draw the weather info on screen"""
     logging.info("Prepare the weather data for drawing")
     # Draw today's date on left side below today's name
     today = arrow.utcnow().format(fmt="DD MMMM", locale=LOCALE)
-    date_font = ImageFont.truetype(WEATHER_FONT, 18)
-    draw.text((3, 3), today, BLACK, font=date_font)
+    date_font = ImageFont.truetype(WEATHER_FONT, 18 + WEATHER_FONT_INCREASE)
+    draw.text((3 + X_OFFSET/3, 3 + Y_OFFSET), today, BLACK, font=date_font)
     # Draw current temperature to right of today
-    temp_font = ImageFont.truetype(WEATHER_FONT, 24)
-    draw.text((3, 30), f"{temp_to_str(weather['temperature'], scale)}°", BLACK, font=temp_font)
+    temp_font = ImageFont.truetype(WEATHER_FONT, 24 + WEATHER_FONT_INCREASE)
+    draw.text((3 + X_OFFSET/3, 30 + Y_OFFSET), f"{temp_to_str(weather['temperature'], scale)}°", fill, font=temp_font)
     # Draw today's high and low temps on left side below date
-    small_font = ImageFont.truetype(WEATHER_FONT, 14)
+    small_font = ImageFont.truetype(WEATHER_FONT, 14 + WEATHER_FONT_INCREASE)
     draw.text(
-        (3, 72),
+        (3 + X_OFFSET/3, 72 + Y_OFFSET),
         f"{temp_to_str(weather['min_temp'], scale)}° - {temp_to_str(weather['max_temp'], scale)}°",
         BLACK,
         font=small_font,
     )
     # Draw today's max humidity on left side below temperatures
-    draw.text((3, 87), f"{weather['max_humidity']}%", BLACK, font=small_font)
+    draw.text((3 + X_OFFSET/3, 87 + Y_OFFSET), f"{weather['max_humidity']}%", BLACK, font=small_font)
     # Load weather icon
     icon_name = weather['symbol'].split('_')[0]
     time_of_day = ''
+    swap_colours = False
     # Couple of symbols have different icons for day and night. Check if this symbol is one of them.
     if len(weather['symbol'].split('_')) > 1:
         symbol_cycle = weather['symbol'].split('_')[1]
@@ -111,19 +130,23 @@ def draw_weather(weather, img, scale):
             time_of_day = 'd'
         elif symbol_cycle == 'night':
             time_of_day = 'n'
+            swap_colours = True
     icon_filename = f"{icon_map[icon_name]:02}{time_of_day}.png"
     filepath = Path(__file__).parent / 'weather-icons' / icon_filename
     icon_image = Image.open(filepath)
-    icon_mask = create_mask(icon_image)
+    if swap_colours:
+        logging.info("Swapping night weather icon black and colour pixels")
+        icon_image = swap_two_colours(icon_image)
     # Draw the weather icon
     if WEATHER_INVERT and WAVESHARE:
+        icon_mask = create_mask(icon_image)
         logging.info("Inverting Weather Icon")
         icon = Image.new('1', (100, 100), 255)
         icon.paste(icon_image, (0,0), icon_mask)
         icon_inverted = ImageOps.invert(icon.convert('RGB'))
-        img.paste(icon_inverted, (120, 3))
+        img.paste(icon_inverted, (119 + X_OFFSET, 3 + Y_OFFSET))
     else:
-        img.paste(icon_image, (120, 3), icon_mask)
+        img.paste(icon_image, (119 + X_OFFSET, 3 + Y_OFFSET))
     return img
 
 def get_current_display():
@@ -225,10 +248,14 @@ def set_current_display(val):
         logging.error(f"Failed to set current display to {val}. Error is: {err}")
 
 def temp_to_str(temp, scale):
-    """Prepare the temperature to draw based on the defined scale: Celcius or Fahrenheit"""
+    """Prepare the temperature to draw based on the defined scale: Celsius or Fahrenheit"""
     if scale == 'F':
-        temp = temp * 9/5 + 32
+        temp = celsius_to_fahrenheit(temp)
     return f"{temp:.1f}"
+
+def celsius_to_fahrenheit(temp):
+    """Convert Celsius to Fahrenheit"""
+    return temp * 9/5 + 32
 
 # Read the preset environment variables and overwrite the default ones
 if "DEBUG" in os.environ:
@@ -268,6 +295,11 @@ WEATHER_INVERT = True if "WEATHER_INVERT" in os.environ else False
 # Temperature scale
 SCALE = 'F' if "SCALE" in os.environ and os.environ["SCALE"] == 'F' else 'C'
 
+# Temperature threshold above which T is displayed in colour
+TEMP_THRESHOLD = 25 if SCALE == 'C' else celsius_to_fahrenheit(25)
+if "TEMP_THRESHOLD" in os.environ:
+    TEMP_THRESHOLD = os.environ['TEMP_THRESHOLD']
+
 # Locale formatting of date
 LOCALE = os.environ["LOCALE"] if "LOCALE" in os.environ else 'en'
 
@@ -306,6 +338,22 @@ else:
     HEIGHT = display.HEIGHT
     BLACK = display.BLACK
     WHITE = display.WHITE
+    COLOUR = BLACK if display.colour == "black" else display.RED
+    if HEIGHT == 104:
+        # Display size: W 212 x H 104
+        X_OFFSET = 0
+        Y_OFFSET = 0
+        WEATHER_FONT_INCREASE = 0
+    else:
+        # Display size: W 250 x H 122
+        # text margin is 3 + 1/3*X_OFFSET = 10 pixels from left border
+        # weather icon is 250 - (120 + 21 + 100) = 9 pixels from right border 
+        X_OFFSET = 21 
+        # centering weather icons along y-axis:
+        # default padding is 3 => 3+8 + 100 (weather icon height) + 3+8 = 122 pixels
+        # thus, an addition offset of 8 pixels places the weather icon in the middle
+        Y_OFFSET = 8 
+        WEATHER_FONT_INCREASE = 2
     img = Image.new("P", (WIDTH, HEIGHT))
 
 draw = ImageDraw.Draw(img)
@@ -340,7 +388,9 @@ if target_display == 'weather':
     os.environ['LATLONG'] = f"{LAT},{LONG}"
     # If weather is empty dictionary, fall back to drawing quote
     if len(weather) > 0:
-        img = draw_weather(weather, img, SCALE)
+        temperature = weather['temperature'] if SCALE == 'C' else celsius_to_fahrenheit(weather['temperature'])
+        fill = COLOUR if temperature >= TEMP_THRESHOLD else BLACK
+        img = draw_weather(weather, img, SCALE, fill)
     else:
         target_display = 'quote'
 elif target_display == 'quote':
@@ -414,6 +464,12 @@ elif target_display == 'quote':
 # Rotate and display the image
 if "ROTATE" in os.environ:
     img = img.rotate(180)
+
+# Enable dark mode 
+# #(it swaps the colour of the first two pixels in the palette)
+if "WEATHER_DARK_MODE" in os.environ and target_display == 'weather':
+    logging.info("Switching to dark mode")
+    img = swap_two_colours(img, dark_mode=True)
 
 if WAVESHARE:
     # epd does not have a set_image method.

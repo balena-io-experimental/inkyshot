@@ -373,10 +373,10 @@ elif target_display == 'quote':
     while message_does_not_fit == True:
         test_message = ""
         message_width = 0
-        FONT_SIZE -= 1
+        FONT = ImageFont.truetype(FONT_SELECTED, FONT_SIZE)
 
-        if FONT_SIZE <= 17:
-            FONT_SIZE = 8
+        if FONT_SIZE <= 12:
+            FONT_SIZE = 10
             FONT = ImageFont.truetype("/usr/app/fonts/Grand9KPixel.ttf", FONT_SIZE)
 
         # We're using the test character here to work out how many characters
@@ -395,8 +395,11 @@ elif target_display == 'quote':
         if len(word_list) <= max_lines:
             message_does_not_fit = False
 
-        if FONT_SIZE < 9:
+        if FONT_SIZE <= 10:
             message_does_not_fit = False
+
+        if message_does_not_fit:
+            FONT_SIZE -= 1
 
     logging.info("Font size: %s", FONT_SIZE)
     offset_x, offset_y = FONT.getoffset(message)

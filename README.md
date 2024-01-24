@@ -23,6 +23,8 @@ Running this project is as simple as deploying it to a balenaCloud application. 
 
 You can also deploy in the traditional manner using the balena CLI and `balena push` command. For more information [check out the docs](https://www.balena.io/docs/learn/deploy/deployment/).
 
+UPDATE:  The Quote of the Day service now requires authentication via API token.  Please visit https://theysaidso.com/user/subscriptions to create an account and a token.  You can set this token in the Balena deploy phase by selecting the advance setup option and updating the value of QOD_API_TOKEN.   You can also set this later using the same process as other environment variables.
+
 ## Customization
 
 Your fleet of Inkyshots can all be managed centrally via balenaCloud. Try any of the environment variables below to add some customization.

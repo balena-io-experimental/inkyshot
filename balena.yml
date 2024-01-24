@@ -22,6 +22,7 @@ data:
   applicationEnvironmentVariables:
     - UPDATE_HOUR: 9
     - TZ: Europe/London
+    - QOD_API_TOKEN: MY_TOKEN
     - QOD_CATEGORY: inspire
     - FONT: AmaticSC
     - TEST_CHARACTER: a

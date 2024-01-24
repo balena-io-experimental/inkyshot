@@ -1,4 +1,15 @@
 - commits:
+    - subject: Allow CI for external contributions
+      hash: f372b85c673593cae6e39a0f0fd2c6f37ebc5a73
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Kyle Harding
+  version: 1.3.17
+  title: ""
+  date: 2024-01-12T15:21:07.512Z
+- commits:
     - subject: Updating references from balenalabs to balena-labs-projects
       hash: 8d43f69d252a612c40529f930d8003e354599d9e
       body: ""

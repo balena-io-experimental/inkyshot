@@ -279,6 +279,7 @@ BALENA_API_KEY = os.environ["BALENA_API_KEY"]
 BALENA_DEVICE_UUID = os.environ["BALENA_DEVICE_UUID"]
 BALENA_SUPERVISOR_ADDRESS = os.environ["BALENA_SUPERVISOR_ADDRESS"]
 BALENA_SUPERVISOR_API_KEY = os.environ["BALENA_SUPERVISOR_API_KEY"]
+QOD_API_TOKEN = os.environ["QOD_API_TOKEN"]
 
 WAVESHARE = True if "WAVESHARE" in os.environ else False
 
@@ -353,7 +354,7 @@ elif target_display == 'quote':
         try:
             response = requests.get(
                 f"https://quotes.rest/qod?category={CATEGORY}&language={LANGUAGE}",
-                headers={"Accept" : "application/json"}
+                headers = {"Accept": "application/json", "Authorization": f"Bearer {QOD_API_TOKEN}"}
             )
             data = response.json()
             message = data['contents']['quotes'][0]['quote']
